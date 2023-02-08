@@ -1,0 +1,24 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>220</x><y>230</y><w>210</w><h>120</h></coordinates><panel_attributes>Team
+--
+- name : String
+- firstEntryYear : int
+- lastEntryYear: int
+- active : boolean
+- teamChampionships : int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>610</x><y>230</y><w>200</w><h>150</h></coordinates><panel_attributes>Driver
+--
+- name : String
+- birthday : Localdate
+- completedRaces : int
+- belongsTo : Team
+- role : String
+- active : boolean
+- points : double
+- championships : int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>280</y><w>210</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
+m1=1
+m2= 0..n
+drives for</panel_attributes><additional_attributes>10;20;190;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>330</x><y>60</y><w>360</w><h>100</h></coordinates><panel_attributes>Julian Kruithof, IS101 (practicumopdracht OOP2)
+
+	Subject: Formula 1
+	Main: Team
+	Detail: Driver</panel_attributes><additional_attributes></additional_attributes></element></diagram>
