@@ -16,6 +16,7 @@ public abstract class View {
     public View() {
         root = initializeView();
     }
+
     protected abstract Parent initializeView();
 
     public Parent getRoot() {
@@ -25,7 +26,8 @@ public abstract class View {
     /**
      * create a button with styling
      * Border radius of 15px, padding of 5 and 12 and a preferred width of 150
-     * @param text text inside the button
+     *
+     * @param text  text inside the button
      * @param color color of the button.
      * @return a Styled button
      */
@@ -35,7 +37,7 @@ public abstract class View {
         button.setMinWidth(100);
         button.setPrefWidth(150);
         StringBuilder str = new StringBuilder("-fx-border-radius: 15px;");
-        if (color != null){
+        if (color != null) {
             str.append(String.format("-fx-background-color: %s", color));
         }
         button.setStyle(str.toString());

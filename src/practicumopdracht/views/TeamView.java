@@ -14,12 +14,21 @@ import javafx.scene.layout.VBox;
 import javafx.scene.shape.HLineTo;
 import practicumopdracht.models.Team;
 
-
-public class TeamView extends View{
+/**
+ * View of team
+ *
+ * @author Julian Kruithof
+ */
+public class TeamView extends View {
     private final double SPACING = 12;
     private final String GREEN_COLOR = "#26a514";
     private final String RED_COLOR = "#d81e05";
 
+    /**
+     * initialize the view of a Team
+     *
+     * @return parent object to create a scene
+     */
     @Override
     protected Parent initializeView() {
 
@@ -29,9 +38,9 @@ public class TeamView extends View{
         vBox.setPadding(new Insets(SPACING));
 
         /*Create a gridPane with styling
-        *
-        * The gridpane is used for inputfield asking the user for information about a F1-team
-        * */
+         *
+         * The gridpane is used for inputfield asking the user for information about a F1-team
+         * */
         GridPane gridPane = new GridPane();
         gridPane.setVgap(7.5);
         gridPane.setHgap(5);
@@ -43,7 +52,7 @@ public class TeamView extends View{
         gridPane.addRow(0, new Label("teamname:"), new TextField());
         gridPane.addRow(1, new Label("Started in year:"), new TextField());
         gridPane.addRow(2, new Label("Championships:"), new TextField());
-        gridPane.addRow(3, new Label("team is currently active") ,new CheckBox());
+        gridPane.addRow(3, new Label("team is currently active"), new CheckBox());
 
         Button saveBtn = createButton("Opslaan", GREEN_COLOR);
         saveBtn.setPrefWidth(320);
@@ -59,13 +68,11 @@ public class TeamView extends View{
         Button switchViewBtn = createButton("bekijk Coureurs", null);
         buttonContainer.setSpacing(50);
         buttonContainer.getChildren().addAll(createBtn, deleteBtn, switchViewBtn);
-        teamCrudContainer.getChildren().addAll(teams,buttonContainer);
+        teamCrudContainer.getChildren().addAll(teams, buttonContainer);
 
-        vBox.getChildren().addAll(gridPane, saveBtn, teamCrudContainer );
+        vBox.getChildren().addAll(gridPane, saveBtn, teamCrudContainer);
         vBox.setSpacing(SPACING);
 
         return vBox;
     }
-
-
 }

@@ -3,11 +3,12 @@ package practicumopdracht;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import practicumopdracht.views.DriverView;
 import practicumopdracht.views.TeamView;
 import practicumopdracht.views.View;
 
 public class MainApplication extends Application {
-    private final View INITIAL_VIEW = new TeamView();
+    private final View INITIAL_VIEW = new DriverView();
     @Override
     public void start(Stage stage) {
         if(!Main.launchedFromMain) {
