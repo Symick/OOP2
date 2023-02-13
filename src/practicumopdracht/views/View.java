@@ -1,6 +1,8 @@
 package practicumopdracht.views;
 
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 
 /**
  * abstract class to for the general setup for a view.
@@ -18,5 +20,25 @@ public abstract class View {
 
     public Parent getRoot() {
         return root;
+    }
+
+    /**
+     * create a button with styling
+     * Border radius of 15px, padding of 5 and 12 and a preferred width of 150
+     * @param text text inside the button
+     * @param color color of the button.
+     * @return a Styled button
+     */
+    protected Button createButton(String text, String color) {
+        Button button = new Button(text);
+        button.setPadding(new Insets(5, 12, 5, 12));
+        button.setMinWidth(100);
+        button.setPrefWidth(150);
+        StringBuilder str = new StringBuilder("-fx-border-radius: 15px;");
+        if (color != null){
+            str.append(String.format("-fx-background-color: %s", color));
+        }
+        button.setStyle(str.toString());
+        return button;
     }
 }

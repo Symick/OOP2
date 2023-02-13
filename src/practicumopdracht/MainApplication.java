@@ -7,7 +7,7 @@ import practicumopdracht.views.TeamView;
 import practicumopdracht.views.View;
 
 public class MainApplication extends Application {
-    private View view = new TeamView();
+    private final View INITIAL_VIEW = new TeamView();
     @Override
     public void start(Stage stage) {
         if(!Main.launchedFromMain) {
@@ -20,7 +20,8 @@ public class MainApplication extends Application {
         stage.setTitle(String.format("Practicumopdracht OOP2 - %s", Main.studentNaam));
         stage.setWidth(640);
         stage.setHeight(480);
-        stage.setScene(new Scene(view.getRoot()));
+        stage.setScene(new Scene(INITIAL_VIEW.getRoot()));
         stage.show();
     }
+
 }
