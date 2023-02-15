@@ -3,14 +3,22 @@ package practicumopdracht;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import practicumopdracht.controllers.Controller;
+import practicumopdracht.controllers.DriverController;
+import practicumopdracht.controllers.TeamController;
 import practicumopdracht.views.DriverView;
 import practicumopdracht.views.TeamView;
 import practicumopdracht.views.View;
 
 public class MainApplication extends Application {
-    private final View INITIAL_VIEW = new TeamView();
+    private final int HEIGHT = 480;
+    private final int WIDTH = 640;
+    private final String TITLE = String.format("Practicumopdracht OOP2 - %s", Main.studentNaam);
+    private static Stage stage;
+
     @Override
     public void start(Stage stage) {
+        this.stage = stage;
         if(!Main.launchedFromMain) {
             System.err.println("Je moet deze applicatie opstarten vanuit de Main-class, niet de MainApplication-class!");
             System.exit(1337);
@@ -18,11 +26,15 @@ public class MainApplication extends Application {
             return;
         }
 
-        stage.setTitle(String.format("Practicumopdracht OOP2 - %s", Main.studentNaam));
-        stage.setWidth(640);
-        stage.setHeight(480);
-        stage.setScene(new Scene(INITIAL_VIEW.getRoot()));
+        stage.setTitle(TITLE);
+        stage.setWidth(WIDTH);
+        stage.setHeight(HEIGHT);
+        switchController(new TeamController());
         stage.show();
+    }
+    public static void switchController(Controller controller) {
+        View view = controller.getView();
+        stage.setScene(new Scene(view.getRoot()));
     }
 
 }
