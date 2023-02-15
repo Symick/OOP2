@@ -43,7 +43,7 @@ public class TeamView extends View {
          * */
         GridPane gridPane = new GridPane();
         gridPane.setVgap(7.5);
-        gridPane.setHgap(5);
+        gridPane.setHgap(10);
         ColumnConstraints column1 = new ColumnConstraints();
         column1.setPercentWidth(25);
         ColumnConstraints column2 = new ColumnConstraints();
