@@ -19,6 +19,7 @@ public abstract class View {
 
     protected abstract Parent initializeView();
 
+
     public Parent getRoot() {
         return root;
     }

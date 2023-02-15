@@ -1,24 +1,50 @@
-<diagram program="umletino" version="15.0.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>220</x><y>230</y><w>210</w><h>120</h></coordinates><panel_attributes>Team
+<diagram program="umletino" version="15.0.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>495</x><y>520</y><w>150</w><h>110</h></coordinates><panel_attributes>&lt;&lt;models&gt;&gt;
+Team
 --
-- name : String
-- firstEntryYear : int
-- lastEntryYear: int
-- active : boolean
-- teamChampionships : int
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>610</x><y>230</y><w>200</w><h>150</h></coordinates><panel_attributes>Driver
+-name: String
+-firstEntryYear: int
+-active: boolean
+-teamChampionship: int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>795</x><y>510</y><w>150</w><h>170</h></coordinates><panel_attributes>&lt;&lt;models&gt;&gt;
+Driver
 --
-- name : String
-- birthday : Localdate
-- completedRaces : int
-- belongsTo : Team
-- role : String
-- active : boolean
-- points : double
-- championships : int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>420</x><y>280</y><w>210</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
+-name: String
+-birthday: LocalDate
+-completedRaces: int
+-belongsTo: Team
+-role: String
+-active: boolean
+-points: double
+-championships: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>635</x><y>580</y><w>180</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2= 0..n
-drives for</panel_attributes><additional_attributes>10;20;190;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>330</x><y>60</y><w>360</w><h>100</h></coordinates><panel_attributes>Julian Kruithof, IS101 (practicumopdracht OOP2)
-
-	Subject: Formula 1
-	Main: Team
-	Detail: Driver</panel_attributes><additional_attributes></additional_attributes></element></diagram>
+drives for</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>235</x><y>330</y><w>160</w><h>50</h></coordinates><panel_attributes>Main
+--
++main(args: String[]): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>235</x><y>210</y><w>170</w><h>70</h></coordinates><panel_attributes>MainApplication
+--
+-INITIAL_VIEW: View
+--
++start(stage: Stage): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>305</x><y>270</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>245</x><y>90</y><w>140</w><h>40</h></coordinates><panel_attributes>&lt;&lt;javafx.application&gt;&gt;
+Application</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>305</x><y>120</y><w>30</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>565</x><y>190</y><w>290</w><h>130</h></coordinates><panel_attributes>&lt;&lt;views&gt;&gt;
+/View/
+--
+-root: Parent
+--
++View()
+/#initializeView(): Parent/
++getRoot(): Parent
+#createButton(text: String, color: String): Button</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>395</x><y>240</y><w>190</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>170;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>495</x><y>360</y><w>150</w><h>110</h></coordinates><panel_attributes>&lt;&lt;views&gt;&gt;
+TeamView
+--
+-SPACING: double
+-GREEN_COLOR: String
+-RED_COLOR: String
+--
+#initializeView(): Parent</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>795</x><y>360</y><w>150</w><h>110</h></coordinates><panel_attributes>&lt;&lt;views&gt;&gt;
+DriverView
+--
+-SPACING: double
+-GREEN_COLOR: String
+-RED_COLOR: String
+--
+#initializeView(): Parent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>555</x><y>310</y><w>180</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>160;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>705</x><y>310</y><w>180</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;160;50</additional_attributes></element></diagram>

@@ -8,7 +8,7 @@ import practicumopdracht.views.TeamView;
 import practicumopdracht.views.View;
 
 public class MainApplication extends Application {
-    private final View INITIAL_VIEW = new DriverView();
+    private final View INITIAL_VIEW = new TeamView();
     @Override
     public void start(Stage stage) {
         if(!Main.launchedFromMain) {
