@@ -3,6 +3,7 @@ package practicumopdracht.views;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.paint.Color;
 
 /**
  * abstract class to for the general setup for a view.
@@ -44,4 +45,15 @@ public abstract class View {
         button.setStyle(str.toString());
         return button;
     }
+
+    /**
+     * change the text color of a variable amount of buttons to white, using the spread operator.
+     * @param buttons a variable amount of buttons
+     */
+    protected void setWhiteTextColor(Button ...buttons) {
+        for (Button button: buttons) {
+            button.setTextFill(Color.WHITE);
+        }
+    }
+
 }
