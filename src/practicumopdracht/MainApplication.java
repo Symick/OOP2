@@ -4,11 +4,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import practicumopdracht.controllers.Controller;
-import practicumopdracht.controllers.DriverController;
 import practicumopdracht.controllers.TeamController;
-import practicumopdracht.views.DriverView;
-import practicumopdracht.views.TeamView;
-import practicumopdracht.views.View;
+
 
 public class MainApplication extends Application {
     private final int HEIGHT = 480;
@@ -18,8 +15,8 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage stage) {
-        this.stage = stage;
-        if(!Main.launchedFromMain) {
+        MainApplication.stage = stage;
+        if (!Main.launchedFromMain) {
             System.err.println("Je moet deze applicatie opstarten vanuit de Main-class, niet de MainApplication-class!");
             System.exit(1337);
 
@@ -32,6 +29,7 @@ public class MainApplication extends Application {
         switchController(new TeamController());
         stage.show();
     }
+
     public static void switchController(Controller controller) {
         stage.setScene(new Scene(controller.getView().getRoot()));
     }
