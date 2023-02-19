@@ -33,8 +33,7 @@ public class MainApplication extends Application {
         stage.show();
     }
     public static void switchController(Controller controller) {
-        View view = controller.getView();
-        stage.setScene(new Scene(view.getRoot()));
+        stage.setScene(new Scene(controller.getView().getRoot()));
     }
 
 }

@@ -20,8 +20,13 @@ public class DriverView extends View {
     private final String GREEN_COLOR = "#26a514";
     private final String RED_COLOR = "#d81e05";
 
+    private Button createBtn;
+    private Button saveBtn;
+    private Button deleteBtn;
+    private Button switchViewBtn;
+
     /**
-     * Create the look of the driverview
+     * Create the look of the driver view
      *
      * @return Parent object to create a scene
      */
@@ -33,7 +38,7 @@ public class DriverView extends View {
 
         /*Create a gridPane with styling
          *
-         * The gridpane is used for inputfield asking the user for information about a F1-team
+         * The gridPane is used for input field asking the user for information about a F1-team
          * */
         GridPane gridPane = new GridPane();
         gridPane.setVgap(7.5);
@@ -56,7 +61,7 @@ public class DriverView extends View {
                 new Label("Completed races:"),
                 new Label("Active:"));
 
-        ComboBox teams = new ComboBox<Team>();
+        ComboBox<Team> teams = new ComboBox<>();
         teams.setPrefWidth(Double.MAX_VALUE);
         gridPane.add(teams, 1, 0, 3, 1);
         gridPane.add(new TextField(), 1, 1, 3, 1);
@@ -68,25 +73,44 @@ public class DriverView extends View {
         gridPane.add(new Label("Points:"), 2, 4);
         gridPane.add(new TextField(), 3, 4);
         gridPane.add(new CheckBox(), 1, 5);
-        Button saveBtn = createButton("Save", GREEN_COLOR);
+        saveBtn = createButton("Save", GREEN_COLOR);
         saveBtn.setPrefWidth(320);
 
         HBox teamCrudContainer = new HBox();
         teamCrudContainer.setSpacing(SPACING);
-        ListView drivers = new ListView<Driver>();
+        ListView<Driver> drivers = new ListView<>();
         drivers.setPrefWidth(500);
 
         VBox buttonContainer = new VBox();
-        Button createBtn = createButton("New driver", GREEN_COLOR);
-        Button deleteBtn = createButton("Delete driver", RED_COLOR);
-        Button switchViewBtn = createButton("Manage teams", null);
+        createBtn = createButton("New driver", GREEN_COLOR);
+        deleteBtn = createButton("Delete driver", RED_COLOR);
+        switchViewBtn = createButton("Manage teams", null);
         buttonContainer.setSpacing(50);
         buttonContainer.getChildren().addAll(createBtn, deleteBtn, switchViewBtn);
         teamCrudContainer.getChildren().addAll(drivers, buttonContainer);
+
+        //change text color of buttons
+        setWhiteTextColor(saveBtn, createBtn, deleteBtn);
 
         vBox.getChildren().addAll(gridPane, saveBtn, teamCrudContainer);
         vBox.setSpacing(SPACING);
 
         return vBox;
+    }
+
+    public Button getCreateBtn() {
+        return createBtn;
+    }
+
+    public Button getSaveBtn() {
+        return saveBtn;
+    }
+
+    public Button getDeleteBtn() {
+        return deleteBtn;
+    }
+
+    public Button getSwitchViewBtn() {
+        return switchViewBtn;
     }
 }
