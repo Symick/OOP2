@@ -20,10 +20,10 @@ public class TeamView extends View {
     private final String GREEN_COLOR = "#26a514";
     private final String RED_COLOR = "#d81e05";
 
-    private Button createBtn;
-    private Button saveBtn;
-    private Button deleteBtn;
-    private Button switchViewBtn;
+    private Button createBtn, saveBtn, switchViewBtn, deleteBtn;
+    private TextField nameTxf, firstEntryYearTxf, championshipTxf;
+    private CheckBox isActiveCheckbox;
+
 
     /**
      * initialize the view of a Team
@@ -50,12 +50,19 @@ public class TeamView extends View {
         ColumnConstraints column2 = new ColumnConstraints();
         column2.setPercentWidth(75);
         gridPane.getColumnConstraints().addAll(column1, column2);
-        gridPane.addRow(0, new Label("team name:"), new TextField());
-        gridPane.addRow(1, new Label("Started in year:"), new TextField());
-        gridPane.addRow(2, new Label("Championships:"), new TextField());
-        gridPane.addRow(3, new Label("team is currently active"), new CheckBox());
 
-        saveBtn = createButton("Opslaan", GREEN_COLOR);
+        //initialize textfields
+        nameTxf = new TextField();
+        firstEntryYearTxf = new TextField();
+        championshipTxf = new TextField();
+        isActiveCheckbox = new CheckBox();
+
+        gridPane.addRow(0, new Label("Team name:"), nameTxf);
+        gridPane.addRow(1, new Label("First competed in year:"), firstEntryYearTxf);
+        gridPane.addRow(2, new Label("Championships:"), championshipTxf);
+        gridPane.addRow(3, new Label("Team is active"), isActiveCheckbox);
+
+        saveBtn = createButton("Save", GREEN_COLOR);
         saveBtn.setPrefWidth(320);
 
         HBox teamCrudContainer = new HBox();
@@ -67,9 +74,9 @@ public class TeamView extends View {
          * styling of a vertical container containing buttons
          */
         VBox buttonContainer = new VBox();
-        createBtn = createButton("Nieuw team", GREEN_COLOR);
-        deleteBtn = createButton("Verwijder team", RED_COLOR);
-        switchViewBtn = createButton("bekijk Coureurs", null);
+        createBtn = createButton("New team", GREEN_COLOR);
+        deleteBtn = createButton("Delete team", RED_COLOR);
+        switchViewBtn = createButton("View Drivers", null);
         buttonContainer.setSpacing(50);
         buttonContainer.getChildren().addAll(createBtn, deleteBtn, switchViewBtn);
         teamCrudContainer.getChildren().addAll(teams, buttonContainer);
@@ -97,5 +104,21 @@ public class TeamView extends View {
 
     public Button getSwitchViewBtn() {
         return switchViewBtn;
+    }
+
+    public TextField getNameTxf() {
+        return nameTxf;
+    }
+
+    public TextField getFirstEntryYearTxf() {
+        return firstEntryYearTxf;
+    }
+
+    public TextField getChampionshipTxf() {
+        return championshipTxf;
+    }
+
+    public CheckBox getIsActiveCheckbox() {
+        return isActiveCheckbox;
     }
 }

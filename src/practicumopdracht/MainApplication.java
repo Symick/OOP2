@@ -2,14 +2,15 @@ package practicumopdracht;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 import practicumopdracht.controllers.Controller;
 import practicumopdracht.controllers.TeamController;
 
 
 public class MainApplication extends Application {
-    private final int HEIGHT = 480;
-    private final int WIDTH = 640;
+    private final static int HEIGHT = 480;
+    private final static int WIDTH = 640;
     private final String TITLE = String.format("Practicumopdracht OOP2 - %s", Main.studentNaam);
     private static Stage stage;
 
@@ -22,16 +23,24 @@ public class MainApplication extends Application {
 
             return;
         }
-
-        stage.setTitle(TITLE);
-        stage.setWidth(WIDTH);
         stage.setHeight(HEIGHT);
+        stage.setWidth(WIDTH);
+        stage.setTitle(TITLE);
         switchController(new TeamController());
         stage.show();
     }
 
     public static void switchController(Controller controller) {
-        stage.setScene(new Scene(controller.getView().getRoot()));
+        //check if there is already a scene created.
+        if (stage.getScene() == null) {
+            stage.setScene(new Scene(controller.getView().getRoot()));
+        }else {
+            //set the new scene to the width and height of the old view. This makes sure that the application doesn't resize.
+            Scene oldScene = stage.getScene();
+            stage.setScene(new Scene(controller.getView().getRoot(), oldScene.getWidth(), oldScene.getHeight()));
+            stage.sizeToScene();
+
+        }
     }
 
 }

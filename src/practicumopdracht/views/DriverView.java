@@ -56,7 +56,7 @@ public class DriverView extends View {
         gridPane.addColumn(0,
                 new Label("Choose team:"),
                 new Label("Name:"),
-                new Label("role:"),
+                new Label("Role:"),
                 new Label("Birthday:"),
                 new Label("Completed races:"),
                 new Label("Active:"));
@@ -67,10 +67,10 @@ public class DriverView extends View {
         gridPane.add(new TextField(), 1, 1, 3, 1);
         gridPane.add(new TextField(), 1, 2, 3, 1);
         gridPane.add(new DatePicker(), 1, 3);
-        gridPane.add(new Label("Championships:"), 2, 3);
+        gridPane.add(new Label("Kampioenschappen:"), 2, 3);
         gridPane.add(new TextField(), 3, 3);
         gridPane.add(new TextField(), 1, 4);
-        gridPane.add(new Label("Points:"), 2, 4);
+        gridPane.add(new Label("Punten:"), 2, 4);
         gridPane.add(new TextField(), 3, 4);
         gridPane.add(new CheckBox(), 1, 5);
         saveBtn = createButton("Save", GREEN_COLOR);
@@ -84,7 +84,7 @@ public class DriverView extends View {
         VBox buttonContainer = new VBox();
         createBtn = createButton("New driver", GREEN_COLOR);
         deleteBtn = createButton("Delete driver", RED_COLOR);
-        switchViewBtn = createButton("Manage teams", null);
+        switchViewBtn = createButton("View teams", null);
         buttonContainer.setSpacing(50);
         buttonContainer.getChildren().addAll(createBtn, deleteBtn, switchViewBtn);
         teamCrudContainer.getChildren().addAll(drivers, buttonContainer);

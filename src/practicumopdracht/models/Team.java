@@ -44,4 +44,14 @@ public class Team {
     public void setTeamChampionships(int teamChampionships) {
         this.teamChampionships = teamChampionships;
     }
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "name='" + name + '\'' +
+                ", firstEntryYear=" + firstEntryYear +
+                ", active=" + active +
+                ", teamChampionships=" + teamChampionships +
+                '}';
+    }
 }
