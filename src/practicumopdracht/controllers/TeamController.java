@@ -32,13 +32,13 @@ public class TeamController extends Controller {
     private void handleSaveTeam() {
         Alert warning = new Alert(Alert.AlertType.WARNING);
         Alert info = new Alert(Alert.AlertType.INFORMATION);
-        info.setTitle("opslaan");
-        warning.setTitle("opslaan");
+        info.setTitle("Save");
+        warning.setTitle("Save");
         StringBuilder str = new StringBuilder();
 
         //check if name is empty
         if (teamView.getNameTxf().getText().isBlank()) {
-            str.append("There where some mistakes: \n-Team name must be filled in!\n");
+            str.append("-Team name must be filled in!\n");
             teamView.getNameTxf().setStyle("-fx-border-color: RED");
         }
         //check if first entry year is an integer
@@ -63,6 +63,7 @@ public class TeamController extends Controller {
 
         //show correct Alert depending on error handling
         if(!str.isEmpty()) {
+            str.insert(0, "There where some mistakes: \n");
             warning.setHeaderText(str.toString());
             warning.showAndWait();
         } else {

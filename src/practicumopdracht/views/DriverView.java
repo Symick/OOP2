@@ -20,10 +20,10 @@ public class DriverView extends View {
     private final String GREEN_COLOR = "#26a514";
     private final String RED_COLOR = "#d81e05";
 
-    private Button createBtn;
-    private Button saveBtn;
-    private Button deleteBtn;
-    private Button switchViewBtn;
+    private Button createBtn, saveBtn, deleteBtn, switchViewBtn;
+    private TextField nameTxf, roleTfx, championshipsTfx, pointsTfx, completedRacesTfx;
+    private DatePicker birthdatePicker;
+    private CheckBox isActiveCheckbox;
 
     /**
      * Create the look of the driver view
@@ -61,18 +61,27 @@ public class DriverView extends View {
                 new Label("Completed races:"),
                 new Label("Active:"));
 
+        //initialize input fields
+        nameTxf = new TextField();
+        championshipsTfx = new TextField();
+        pointsTfx = new TextField();
+        completedRacesTfx = new TextField();
+        roleTfx = new TextField();
+        birthdatePicker = new DatePicker();
+        isActiveCheckbox = new CheckBox();
+
         ComboBox<Team> teams = new ComboBox<>();
         teams.setPrefWidth(Double.MAX_VALUE);
         gridPane.add(teams, 1, 0, 3, 1);
-        gridPane.add(new TextField(), 1, 1, 3, 1);
-        gridPane.add(new TextField(), 1, 2, 3, 1);
-        gridPane.add(new DatePicker(), 1, 3);
-        gridPane.add(new Label("Kampioenschappen:"), 2, 3);
-        gridPane.add(new TextField(), 3, 3);
-        gridPane.add(new TextField(), 1, 4);
-        gridPane.add(new Label("Punten:"), 2, 4);
-        gridPane.add(new TextField(), 3, 4);
-        gridPane.add(new CheckBox(), 1, 5);
+        gridPane.add(nameTxf, 1, 1, 3, 1);
+        gridPane.add(roleTfx, 1, 2, 3, 1);
+        gridPane.add(birthdatePicker, 1, 3);
+        gridPane.add(new Label("Championships:"), 2, 3);
+        gridPane.add(championshipsTfx, 3, 3);
+        gridPane.add(completedRacesTfx, 1, 4);
+        gridPane.add(new Label("Points:"), 2, 4);
+        gridPane.add(pointsTfx, 3, 4);
+        gridPane.add(isActiveCheckbox, 1, 5);
         saveBtn = createButton("Save", GREEN_COLOR);
         saveBtn.setPrefWidth(320);
 
@@ -112,5 +121,33 @@ public class DriverView extends View {
 
     public Button getSwitchViewBtn() {
         return switchViewBtn;
+    }
+
+    public TextField getNameTxf() {
+        return nameTxf;
+    }
+
+    public TextField getRoleTfx() {
+        return roleTfx;
+    }
+
+    public TextField getChampionshipsTfx() {
+        return championshipsTfx;
+    }
+
+    public TextField getPointsTfx() {
+        return pointsTfx;
+    }
+
+    public TextField getCompletedRacesTfx() {
+        return completedRacesTfx;
+    }
+
+    public DatePicker getBirthdatePicker() {
+        return birthdatePicker;
+    }
+
+    public CheckBox getIsActiveCheckbox() {
+        return isActiveCheckbox;
     }
 }
