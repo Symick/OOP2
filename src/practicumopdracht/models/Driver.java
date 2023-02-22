@@ -3,6 +3,7 @@ package practicumopdracht.models;
 import practicumopdracht.models.Team;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class Driver {
     private Team belongsTo;
@@ -89,13 +90,18 @@ public class Driver {
         this.championships = championships;
     }
 
+    private static String formatDate(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return date.format(formatter);
+    }
+
     @Override
     public String toString() {
         return "Driver{" +
                 "belongsTo=" + belongsTo +
                 ", role='" + role + '\'' +
                 ", name='" + name + '\'' +
-                ", birthday=" + birthday +
+                ", birthday=" + formatDate(birthday) +
                 ", completedRaces=" + completedRaces +
                 ", active=" + active +
                 ", points=" + points +
