@@ -1,21 +1,30 @@
 package practicumopdracht.controllers;
 
 import javafx.scene.control.Alert;
+import javafx.util.StringConverter;
 import practicumopdracht.MainApplication;
 import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
+import practicumopdracht.utils.LocalDateConverter;
 import practicumopdracht.views.DriverView;
 import practicumopdracht.views.View;
-
 import java.time.LocalDate;
+
 
 
 public class DriverController extends Controller{
     private DriverView driverView;
+    private LocalDate birthday;
 
     public DriverController() {
         driverView = new DriverView();
 
+        driverView.getBirthdatePicker().setOnAction(actionEvent -> {
+            if(driverView.getBirthdatePicker().getConverter() instanceof LocalDateConverter converter) {
+                birthday = converter.hasParseError() ? null : driverView.getBirthdatePicker().getValue();
+            }
+
+        });
         driverView.getCreateBtn().setOnAction(actionEvent -> handleCreateDriver());
         driverView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteDriver());
         driverView.getSaveBtn().setOnAction(actionEvent -> handleSaveDriver());
@@ -34,6 +43,7 @@ public class DriverController extends Controller{
     private void handleSwitchView() {
         MainApplication.switchController(new TeamController());
     }
+
     private void handleSaveDriver()  {
         Alert warning = new Alert(Alert.AlertType.WARNING);
         Alert info = new Alert(Alert.AlertType.INFORMATION);
@@ -45,7 +55,7 @@ public class DriverController extends Controller{
         String championships = driverView.getChampionshipsTfx().getText();
         String points = driverView.getPointsTfx().getText();
         String completedRaces = driverView.getCompletedRacesTfx().getText();
-        LocalDate birthday;
+
 
         StringBuilder str = new StringBuilder();
 
@@ -108,7 +118,6 @@ public class DriverController extends Controller{
         }
 
     }
-
 
     @Override
     public View getView() {

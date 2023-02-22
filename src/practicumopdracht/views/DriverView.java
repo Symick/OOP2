@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
+import practicumopdracht.utils.LocalDateConverter;
 
 /**
  * view of a driver
@@ -69,6 +70,8 @@ public class DriverView extends View {
         roleTfx = new TextField();
         birthdatePicker = new DatePicker();
         isActiveCheckbox = new CheckBox();
+
+        birthdatePicker.setConverter(new LocalDateConverter());
 
         ComboBox<Team> teams = new ComboBox<>();
         teams.setPrefWidth(Double.MAX_VALUE);
