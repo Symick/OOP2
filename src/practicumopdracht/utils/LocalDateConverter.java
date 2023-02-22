@@ -40,7 +40,7 @@ public class LocalDateConverter extends StringConverter<LocalDate> {
     /**
      * converts a string into a LocalDate if LocalDate is parsable. If it isn't parsable has ParseError is set to true
      * @param dateString a string containing a LocalDate
-     * @return A Localdate object or null depending if the string can be parsed into a LocalDate
+     * @return A LocalDate object or null depending on if the string can be parsed into a LocalDate
      */
     @Override
     public LocalDate fromString(String dateString) {

@@ -19,12 +19,6 @@ public class DriverController extends Controller{
     public DriverController() {
         driverView = new DriverView();
 
-        driverView.getBirthdatePicker().setOnAction(actionEvent -> {
-            if(driverView.getBirthdatePicker().getConverter() instanceof LocalDateConverter converter) {
-                birthday = converter.hasParseError() ? null : driverView.getBirthdatePicker().getValue();
-            }
-
-        });
         driverView.getCreateBtn().setOnAction(actionEvent -> handleCreateDriver());
         driverView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteDriver());
         driverView.getSaveBtn().setOnAction(actionEvent -> handleSaveDriver());
@@ -91,9 +85,8 @@ public class DriverController extends Controller{
 
         // check if birthday is a valid date
         if (driverView.getBirthdatePicker().getValue() == null) {
-            str.append("-Please enter a valid birthdate!\n");
+            str.append("-Please enter a valid birthdate! Use the format dd-mm-yyyy\n");
             driverView.getBirthdatePicker().setStyle("-fx-border-color: RED");
-            birthday = null;
         } else {
             birthday = driverView.getBirthdatePicker().getValue();
         }
