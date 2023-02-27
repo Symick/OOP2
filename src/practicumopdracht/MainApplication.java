@@ -1,5 +1,9 @@
 package practicumopdracht;
 
+import data.DriverDAO;
+import data.DummyDriverDAO;
+import data.DummyTeamDAO;
+import data.TeamDAO;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,6 +17,8 @@ public class MainApplication extends Application {
     private final static int WIDTH = 640;
     private final String TITLE = String.format("Practicumopdracht OOP2 - %s", Main.studentNaam);
     private static Stage stage;
+    private static TeamDAO teamDAO = new DummyTeamDAO();
+    private static DriverDAO driverDAO = new DummyDriverDAO();
 
     @Override
     public void start(Stage stage) {
@@ -26,6 +32,8 @@ public class MainApplication extends Application {
         stage.setHeight(HEIGHT);
         stage.setWidth(WIDTH);
         stage.setTitle(TITLE);
+        teamDAO.load();
+        driverDAO.load();
         switchController(new TeamController());
         stage.show();
     }
@@ -43,4 +51,11 @@ public class MainApplication extends Application {
         }
     }
 
+    public static DriverDAO getDriverDAO() {
+        return driverDAO;
+    }
+
+    public static TeamDAO getTeamDAO() {
+        return teamDAO;
+    }
 }

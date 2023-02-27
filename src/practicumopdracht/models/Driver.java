@@ -97,15 +97,7 @@ public class Driver {
 
     @Override
     public String toString() {
-        return "Driver{" +
-                "belongsTo=" + belongsTo +
-                ", role='" + role + '\'' +
-                ", name='" + name + '\'' +
-                ", birthday=" + formatDate(birthday) +
-                ", completedRaces=" + completedRaces +
-                ", active=" + active +
-                ", points=" + points +
-                ", championships=" + championships +
-                '}';
+        return String.format("%s\nrole: %s, birthday: %s, championships: %d\ncompleted races: %d, points: %.2f, %s",
+                name, role, formatDate(birthday), championships, completedRaces, points, active ? "active" : "not active");
     }
 }

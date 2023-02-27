@@ -1,5 +1,7 @@
 package practicumopdracht.models;
 
+import java.util.Objects;
+
 public class Team {
     private String name;
     private int firstEntryYear;
@@ -47,11 +49,20 @@ public class Team {
 
     @Override
     public String toString() {
-        return "Team{" +
-                "name='" + name + '\'' +
-                ", firstEntryYear=" + firstEntryYear +
-                ", active=" + active +
-                ", teamChampionships=" + teamChampionships +
-                '}';
+        return String.format("%s\nfirst year active: %d, %s, championships: %d",
+                name, firstEntryYear, active ? "active" : "not active", teamChampionships);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Team team = (Team) o;
+        return firstEntryYear == team.firstEntryYear && active == team.active && teamChampionships == team.teamChampionships && name.equals(team.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, firstEntryYear, active, teamChampionships);
     }
 }

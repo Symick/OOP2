@@ -1,12 +1,20 @@
 package practicumopdracht.controllers;
 
+import data.DriverDAO;
+import data.TeamDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
+import javafx.scene.control.ButtonType;
 import practicumopdracht.MainApplication;
+import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
 import practicumopdracht.views.TeamView;
 import practicumopdracht.views.View;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Controller for the Team model and view
@@ -16,14 +24,40 @@ import java.time.LocalDate;
  */
 public class TeamController extends Controller {
     private TeamView teamView;
-    private Team team;
-
+    private TeamDAO teamDAO;
+    private DriverDAO driverDAO;
+    private boolean teamSelected = false;
+    private int selectedTeam;
+    List<Team> teams;
     /**
      * Constructor for a teamController
      * initiates a new view and add listeners to the buttons
      */
     public TeamController() {
+        driverDAO = MainApplication.getDriverDAO();
+        teamDAO = MainApplication.getTeamDAO();
+
+
         teamView = new TeamView();
+        //fill in listview
+        teams = teamDAO.getAll();
+        ObservableList<Team> observableList = FXCollections.observableList(teams);
+        if (teamView.getListView().getItems().isEmpty()) {
+            teamView.getListView().setItems(observableList);
+        }
+        //listening for change of selection in listview
+        teamView.getListView()
+                .getSelectionModel().
+                selectedItemProperty().
+                addListener((observable -> {
+                    if (teamView.getListView().getSelectionModel().getSelectedItem() == null){
+                        handleNewTeam();
+                    } else {
+                        teamSelected = true;
+                        selectedTeam = teamView.getListView().getSelectionModel().getSelectedIndex();
+                        loadInputFields(teamView.getListView().getSelectionModel().getSelectedItem());
+                    }
+                }));
 
         teamView.getCreateBtn().setOnAction(actionEvent -> handleNewTeam());
         teamView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteTeam());
@@ -35,17 +69,41 @@ public class TeamController extends Controller {
      * handle an event when new button is clicked. Deselects listview and empties inputs to let users create a new Team
      */
     private void handleNewTeam() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "Nieuw");
-        alert.show();
-
+        if (!teamSelected) {
+            return;
+        }
+        clearTextFields(teamView.getNameTxf(), teamView.getChampionshipTxf(), teamView.getFirstEntryYearTxf());
+        teamView.getIsActiveCheckbox().setSelected(false);
+        teamView.getListView().getSelectionModel().clearSelection();
+        teamSelected = false;
     }
 
     /**
      * handle an event when the delete button is clicked. Team is removed from listview and DAO
      */
     private void handleDeleteTeam() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "verwijder");
-        alert.showAndWait();
+
+        Team team = teamView.getListView().getSelectionModel().getSelectedItem();
+        if (team == null) {
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("You sure?");
+        alert.setHeaderText("Are you sure you want to delete the team:" + team.getName());
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() != ButtonType.OK) {
+            return;
+        }
+        teamView.getListView().getItems().remove(team);
+        teamDAO.remove(team);
+
+        //remove drivers driving for the team that has been removed.
+        List<Driver> drivers = driverDAO.getAllFor(team);
+        for (Driver driver: drivers) {
+            driverDAO.remove(driver);
+        }
+        teamView.getListView().getSelectionModel().clearSelection();
+        teamSelected = false;
     }
 
     /**
@@ -90,18 +148,21 @@ public class TeamController extends Controller {
             warning.showAndWait();
         } else {
             resetBorderColor(teamView.getNameTxf(), teamView.getChampionshipTxf(), teamView.getFirstEntryYearTxf());
-            team = new Team(
-                    teamView.getNameTxf().getText(),
-                    Integer.parseInt(teamView.getFirstEntryYearTxf().getText()),
-                    teamView.getIsActiveCheckbox().isSelected(),
-                    Integer.parseInt(teamView.getChampionshipTxf().getText())
-            );
-            info.setHeaderText(team.toString());
-
-            //reset fields
-            clearTextFields(teamView.getNameTxf(), teamView.getChampionshipTxf(), teamView.getFirstEntryYearTxf());
-            teamView.getIsActiveCheckbox().setSelected(false);
-            info.showAndWait();
+            Team team;
+            //check if team there is a team selected, if so update the model, else create a new team model.
+            if (teamSelected) {
+                team = teamView.getListView().getSelectionModel().getSelectedItem();
+                team.setName(teamView.getNameTxf().getText());
+                team.setTeamChampionships(Integer.parseInt(teamView.getChampionshipTxf().getText()));
+                team.setFirstEntryYear(Integer.parseInt(teamView.getFirstEntryYearTxf().getText()));
+                team.setActive(teamView.getIsActiveCheckbox().isSelected());
+                teamView.getListView().refresh();
+            } else {
+                team = new Team(teamView.getNameTxf().getText(), Integer.parseInt(teamView.getFirstEntryYearTxf().getText()),
+                        teamView.getIsActiveCheckbox().isSelected(), Integer.parseInt(teamView.getChampionshipTxf().getText()));
+                teamView.getListView().getItems().add(team);
+            }
+            teamDAO.addOrUpdate(team);
         }
 
     }
@@ -110,8 +171,21 @@ public class TeamController extends Controller {
      * handle event when switch view button is clicked. start a new Driverview depending on the selected Team model
      */
     private void handleSwitchView() {
-        MainApplication.switchController(new DriverController());
+        if (teamSelected) {
+            MainApplication.switchController(new DriverController(teamView.getListView().getItems().get(selectedTeam)));
+        }
+        else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No selection");
+            alert.setHeaderText("Please select a team in the list before switching");
+        }
+    }
 
+    private void loadInputFields(Team team) {
+        teamView.getNameTxf().setText(team.getName());
+        teamView.getFirstEntryYearTxf().setText(Integer.toString(team.getFirstEntryYear()));
+        teamView.getChampionshipTxf().setText(Integer.toString(team.getTeamChampionships()));
+        teamView.getIsActiveCheckbox().setSelected(team.isActive());
     }
 
     /**

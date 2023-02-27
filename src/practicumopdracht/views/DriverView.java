@@ -25,6 +25,8 @@ public class DriverView extends View {
     private TextField nameTxf, roleTfx, championshipsTfx, pointsTfx, completedRacesTfx;
     private DatePicker birthdatePicker;
     private CheckBox isActiveCheckbox;
+    private ComboBox<Team> teams;
+    private ListView<Driver> drivers;
 
     /**
      * Create the look of the driver view
@@ -73,7 +75,7 @@ public class DriverView extends View {
 
         birthdatePicker.setConverter(new LocalDateConverter());
 
-        ComboBox<Team> teams = new ComboBox<>();
+        teams = new ComboBox<>();
         teams.setPrefWidth(Double.MAX_VALUE);
         gridPane.add(teams, 1, 0, 3, 1);
         gridPane.add(nameTxf, 1, 1, 3, 1);
@@ -90,7 +92,7 @@ public class DriverView extends View {
 
         HBox teamCrudContainer = new HBox();
         teamCrudContainer.setSpacing(SPACING);
-        ListView<Driver> drivers = new ListView<>();
+        drivers = new ListView<>();
         drivers.setPrefWidth(500);
 
         VBox buttonContainer = new VBox();
@@ -152,5 +154,13 @@ public class DriverView extends View {
 
     public CheckBox getIsActiveCheckbox() {
         return isActiveCheckbox;
+    }
+
+    public ComboBox<Team> getComboBox() {
+        return teams;
+    }
+
+    public ListView<Driver> getListView() {
+        return drivers;
     }
 }

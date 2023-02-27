@@ -1,7 +1,11 @@
 package practicumopdracht.controllers;
 
+import data.DriverDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
+import javafx.scene.control.ButtonType;
 import practicumopdracht.MainApplication;
 import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
@@ -10,6 +14,8 @@ import practicumopdracht.views.DriverView;
 import practicumopdracht.views.View;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * class for the controller of the Driver entity
@@ -19,14 +25,40 @@ import java.time.LocalDate;
  */
 public class DriverController extends Controller {
     private DriverView driverView;
+    private DriverDAO driverDAO;
     private LocalDate birthday;
+    private boolean driverSelected;
 
     /**
      * Constructor for a DriverController
      * initiates a new view and add listeners to the buttons
      */
-    public DriverController() {
+    public DriverController(Team team) {
         driverView = new DriverView();
+        driverDAO = MainApplication.getDriverDAO();
+        //load in combobox
+        List<Team> teams = MainApplication.getTeamDAO().getAll();
+        ObservableList<Team> observableTeams = FXCollections.observableList(teams);
+        driverView.getComboBox().setItems(observableTeams);
+        driverView.getComboBox().getSelectionModel().select(team);
+
+        //change listview depending on selected in combobox
+        driverView.getComboBox().setOnAction(actionEvent -> loadListView(driverView.getComboBox().getSelectionModel().getSelectedItem()));
+
+        //load in drivers from a team with was selected before view switch
+        loadListView(team);
+
+        driverView.getListView()
+                .getSelectionModel().
+                selectedItemProperty().
+                addListener((observable -> {
+                    if (driverView.getListView().getSelectionModel().getSelectedItem() == null){
+                        handleNewDriver();
+                    } else {
+                        driverSelected = true;
+                        loadInputFields(driverView.getListView().getSelectionModel().getSelectedItem());
+                    }
+                }));
 
         driverView.getCreateBtn().setOnAction(actionEvent -> handleNewDriver());
         driverView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteDriver());
@@ -40,18 +72,39 @@ public class DriverController extends Controller {
      * Driver modal
      */
     private void handleNewDriver() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("New");
-        alert.showAndWait();
+        if (!driverSelected) {
+            return;
+        }
+
+        driverView.getIsActiveCheckbox().setSelected(false);
+        driverView.getListView().getSelectionModel().clearSelection();
+        clearTextFields(driverView.getChampionshipsTfx(), driverView.getRoleTfx(), driverView.getPointsTfx(), driverView.getCompletedRacesTfx(),
+                driverView.getNameTxf());
+        driverView.getBirthdatePicker().setValue(null);
+        driverSelected = false;
     }
 
     /**
      * handle event when delete button is clicked delete model from the listview
      */
     private void handleDeleteDriver() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setHeaderText("Delete");
-        alert.showAndWait();
+
+        Driver driver = driverView.getListView().getSelectionModel().getSelectedItem();
+        if (driver == null) {
+            return;
+        }
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("You sure?");
+        alert.setHeaderText("Are you sure you want to delete the driver: " + driver.getName());
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.isPresent() && result.get() != ButtonType.OK) {
+            return;
+        }
+        driverView.getListView().getItems().remove(driver);
+        driverDAO.remove(driver);
+
+        driverView.getListView().getSelectionModel().clearSelection();
+        driverSelected = false;
     }
 
     /**
@@ -126,16 +179,49 @@ public class DriverController extends Controller {
                     driverView.getNameTxf());
             driverView.getBirthdatePicker().setStyle("-fx-border-color: none");
 
-            Driver driver = new Driver(new Team("Mercedes", 2009, true, 9), role, name, birthday, Integer.parseInt(completedRaces),
-                    driverView.getIsActiveCheckbox().isSelected(), Double.parseDouble(points), Integer.parseInt(championships));
-            info.setHeaderText(driver.toString());
-            info.showAndWait();
+            //update driver if one is selected else add a new driver
+            Driver driver;
+            if (driverSelected) {
+               driver = driverView.getListView().getSelectionModel().getSelectedItem();
+               driver.setName(driverView.getNameTxf().getText());
+               driver.setRole(driverView.getRoleTfx().getText());
+               driver.setBirthday(driverView.getBirthdatePicker().getValue());
+               driver.setChampionships(Integer.parseInt(driverView.getChampionshipsTfx().getText()));
+               driver.setCompletedRaces(Integer.parseInt(driverView.getCompletedRacesTfx().getText()));
+               driver.setPoints(Double.parseDouble(driverView.getPointsTfx().getText()));
+               driver.setActive(driverView.getIsActiveCheckbox().isSelected());
+                driverView.getListView().refresh();
+            } else {
+                driver = new Driver(driverView.getComboBox().getSelectionModel().getSelectedItem(),
+                        driverView.getRoleTfx().getText(), driverView.getNameTxf().getText(),
+                        driverView.getBirthdatePicker().getValue(),
+                        Integer.parseInt(driverView.getCompletedRacesTfx().getText()),
+                        driverView.getIsActiveCheckbox().isSelected(),
+                        Double.parseDouble(driverView.getPointsTfx().getText()),
+                        Integer.parseInt(driverView.getChampionshipsTfx().getText())
+                        );
+                driverView.getListView().getItems().add(driver);
+            }
+            driverDAO.addOrUpdate(driver);
 
-            clearTextFields(driverView.getChampionshipsTfx(), driverView.getRoleTfx(), driverView.getPointsTfx(), driverView.getCompletedRacesTfx(),
-                    driverView.getNameTxf());
-            driverView.getBirthdatePicker().setValue(null);
         }
 
+    }
+
+    private void loadInputFields(Driver driver) {
+        driverView.getNameTxf().setText(driver.getName());
+        driverView.getRoleTfx().setText(driver.getRole());
+        driverView.getBirthdatePicker().setValue(driver.getBirthday());
+        driverView.getChampionshipsTfx().setText(Integer.toString(driver.getChampionships()));
+        driverView.getCompletedRacesTfx().setText(Integer.toString(driver.getCompletedRaces()));
+        driverView.getPointsTfx().setText(Double.toString(driver.getPoints()));
+        driverView.getIsActiveCheckbox().setSelected(driver.isActive());
+    }
+
+    private void loadListView(Team team){
+        List<Driver> drivers = driverDAO.getAllFor(team);
+        ObservableList<Driver> observableList = FXCollections.observableList(drivers);
+        driverView.getListView().setItems(observableList);
     }
 
     @Override

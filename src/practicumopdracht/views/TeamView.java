@@ -23,6 +23,7 @@ public class TeamView extends View {
     private Button createBtn, saveBtn, switchViewBtn, deleteBtn;
     private TextField nameTxf, firstEntryYearTxf, championshipTxf;
     private CheckBox isActiveCheckbox;
+    private ListView<Team> teams;
 
 
     /**
@@ -67,7 +68,7 @@ public class TeamView extends View {
 
         HBox teamCrudContainer = new HBox();
         teamCrudContainer.setSpacing(SPACING);
-        ListView<Team> teams = new ListView<>();
+        teams = new ListView<>();
         teams.setPrefWidth(500);
 
         /*
@@ -120,5 +121,9 @@ public class TeamView extends View {
 
     public CheckBox getIsActiveCheckbox() {
         return isActiveCheckbox;
+    }
+
+    public ListView<Team> getListView() {
+        return teams;
     }
 }
