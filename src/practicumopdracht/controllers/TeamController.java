@@ -8,27 +8,49 @@ import practicumopdracht.views.TeamView;
 import practicumopdracht.views.View;
 import java.time.LocalDate;
 
+/**
+ * Controller for the Team model and view
+ * Extends from Controller
+ *
+ * @author Julian Kruithof
+ */
 public class TeamController extends Controller {
     private TeamView teamView;
     private Team team;
 
+    /**
+     * Constructor for a teamController
+     * initiates a new view and add listeners to the buttons
+     */
     public TeamController() {
         teamView = new TeamView();
 
-        teamView.getCreateBtn().setOnAction(actionEvent -> handleCreateTeam());
+        teamView.getCreateBtn().setOnAction(actionEvent -> handleNewTeam());
         teamView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteTeam());
         teamView.getSaveBtn().setOnAction(actionEvent -> handleSaveTeam());
         teamView.getSwitchViewBtn().setOnAction(actionEvent -> handleSwitchView());
     }
-    private void handleCreateTeam() {
+
+    /**
+     * handle an event when new button is clicked. Deselects listview and empties inputs to let users create a new Team
+     */
+    private void handleNewTeam() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Nieuw");
         alert.show();
 
     }
+
+    /**
+     * handle an event when the delete button is clicked. Team is removed from listview and DAO
+     */
     private void handleDeleteTeam() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "verwijder");
         alert.showAndWait();
     }
+
+    /**
+     * handle event when save button is clicked. Team is either stored or updated in DAO and lisview
+     */
     private void handleSaveTeam() {
         Alert warning = new Alert(Alert.AlertType.WARNING);
         Alert info = new Alert(Alert.AlertType.INFORMATION);
@@ -46,7 +68,7 @@ public class TeamController extends Controller {
             str.append("-Please enter a number in the 'first competed in year' field ! For example 2004\n");
             teamView.getFirstEntryYearTxf().setStyle("-fx-border-color: RED");
         } else {
-            //check if championship is an integer
+            //check if Local date is bigger than 1950 and lower than the current year is an integer
             LocalDate now = LocalDate.now();
             final int START_FORMULA_1 = 1950;
             if (Integer.parseInt(teamView.getFirstEntryYearTxf().getText()) < START_FORMULA_1
@@ -55,7 +77,7 @@ public class TeamController extends Controller {
                 teamView.getFirstEntryYearTxf().setStyle("-fx-border-color: RED");
             }
         }
-
+        //check if championship is an integer
         if (!isInteger(teamView.getChampionshipTxf().getText())) {
             str.append("-Please enter a number in the 'championships' field!\n");
             teamView.getChampionshipTxf().setStyle("-fx-border-color: RED");
@@ -83,11 +105,19 @@ public class TeamController extends Controller {
         }
 
     }
+
+    /**
+     * handle event when switch view button is clicked. start a new Driverview depending on the selected Team model
+     */
     private void handleSwitchView() {
         MainApplication.switchController(new DriverController());
 
     }
 
+    /**
+     * get the current view in place
+     * @return a teamView instance
+     */
     @Override
     public View getView() {
         return teamView;

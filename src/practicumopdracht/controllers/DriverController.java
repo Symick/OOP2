@@ -1,44 +1,70 @@
 package practicumopdracht.controllers;
 
 import javafx.scene.control.Alert;
-import javafx.util.StringConverter;
+
 import practicumopdracht.MainApplication;
 import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
-import practicumopdracht.utils.LocalDateConverter;
+
 import practicumopdracht.views.DriverView;
 import practicumopdracht.views.View;
+
 import java.time.LocalDate;
 
-
-
-public class DriverController extends Controller{
+/**
+ * class for the controller of the Driver entity
+ * extends Controller
+ *
+ * @author Julian Kruithof
+ */
+public class DriverController extends Controller {
     private DriverView driverView;
     private LocalDate birthday;
 
+    /**
+     * Constructor for a DriverController
+     * initiates a new view and add listeners to the buttons
+     */
     public DriverController() {
         driverView = new DriverView();
 
-        driverView.getCreateBtn().setOnAction(actionEvent -> handleCreateDriver());
+        driverView.getCreateBtn().setOnAction(actionEvent -> handleNewDriver());
         driverView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteDriver());
         driverView.getSaveBtn().setOnAction(actionEvent -> handleSaveDriver());
         driverView.getSwitchViewBtn().setOnAction(actionEvent -> handleSwitchView());
     }
-    private void handleCreateDriver() {
+
+    /**
+     * Handle event when the new button is clicked.
+     * delected model in listview and clear the inputs to give the user the option to create a new
+     * Driver modal
+     */
+    private void handleNewDriver() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("New");
         alert.showAndWait();
     }
+
+    /**
+     * handle event when delete button is clicked delete model from the listview
+     */
     private void handleDeleteDriver() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Delete");
         alert.showAndWait();
     }
+
+    /**
+     * handle event when switch button is clicked. aka switch back to masterview
+     */
     private void handleSwitchView() {
         MainApplication.switchController(new TeamController());
     }
 
-    private void handleSaveDriver()  {
+    /**
+     * Handle event when save button is clicked. aka adding or updating a model to the listview
+     */
+    private void handleSaveDriver() {
         Alert warning = new Alert(Alert.AlertType.WARNING);
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.setTitle("Save");
@@ -90,7 +116,7 @@ public class DriverController extends Controller{
         } else {
             birthday = driverView.getBirthdatePicker().getValue();
         }
-
+        //if there are error messages show error alert otherwise create driver and show alert
         if (!str.isEmpty()) {
             str.insert(0, "There where some mistakes: \n");
             warning.setHeaderText(str.toString());
