@@ -5,6 +5,11 @@ import practicumopdracht.models.Team;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Model for a driver object, with a link to a Team.
+ *
+ * @author Julian Kruithof
+ */
 public class Driver {
     private Team belongsTo;
     private String role;
@@ -15,6 +20,18 @@ public class Driver {
     private double points;
     private int championships;
 
+    /**
+     * Constructor
+     *
+     * @param belongsTo - team driver has last driven for
+     * @param role - the role which the driver has in the team. (first, second, third, test, etc) driver
+     * @param name - name of driver
+     * @param birthday - birthday of drivers
+     * @param completedRaces - amount of races driven in formula 1
+     * @param active - is currently driving for the team
+     * @param points - amount of points accumulated in formula 1
+     * @param championships - amount of driver championships won
+     */
     public Driver(Team belongsTo, String role, String name, LocalDate birthday, int completedRaces, boolean active, double points, int championships) {
         this.belongsTo = belongsTo;
         this.role = role;

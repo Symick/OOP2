@@ -24,7 +24,10 @@ public abstract class TeamDAO implements DAO<Team> {
         } catch (Exception e) {
             return null;
         }
+    }
 
+    public int getIdFor(Team team) {
+        return objects.contains(team) ? objects.indexOf(team) : -1;
     }
 
     @Override

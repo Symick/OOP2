@@ -1,15 +1,13 @@
 package practicumopdracht;
 
-import data.DriverDAO;
-import data.DummyDriverDAO;
-import data.DummyTeamDAO;
-import data.TeamDAO;
+import data.*;
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+
 import javafx.stage.Stage;
 import practicumopdracht.controllers.Controller;
 import practicumopdracht.controllers.TeamController;
+
 
 
 public class MainApplication extends Application {
@@ -34,6 +32,11 @@ public class MainApplication extends Application {
         stage.setTitle(TITLE);
         teamDAO.load();
         driverDAO.load();
+        DriverDAO test = new TextDriverDAO();
+        test.load();
+        test.save();
+        System.out.println(test.getAll());
+
         switchController(new TeamController());
         stage.show();
     }
