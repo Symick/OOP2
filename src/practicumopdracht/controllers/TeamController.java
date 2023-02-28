@@ -28,7 +28,7 @@ public class TeamController extends Controller {
     private DriverDAO driverDAO;
     private boolean teamSelected = false;
     private int selectedTeam;
-    List<Team> teams;
+
     /**
      * Constructor for a teamController
      * initiates a new view and add listeners to the buttons
@@ -40,7 +40,7 @@ public class TeamController extends Controller {
 
         teamView = new TeamView();
         //fill in listview
-        teams = teamDAO.getAll();
+        List<Team> teams = teamDAO.getAll();
         ObservableList<Team> observableList = FXCollections.observableList(teams);
         if (teamView.getListView().getItems().isEmpty()) {
             teamView.getListView().setItems(observableList);

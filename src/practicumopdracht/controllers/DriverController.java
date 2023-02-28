@@ -26,7 +26,6 @@ import java.util.Optional;
 public class DriverController extends Controller {
     private DriverView driverView;
     private DriverDAO driverDAO;
-    private LocalDate birthday;
     private boolean driverSelected;
 
     /**
@@ -167,7 +166,7 @@ public class DriverController extends Controller {
             str.append("-Please enter a valid birthdate! Use the format dd-mm-yyyy\n");
             driverView.getBirthdatePicker().setStyle("-fx-border-color: RED");
         } else {
-            birthday = driverView.getBirthdatePicker().getValue();
+            LocalDate birthday = driverView.getBirthdatePicker().getValue();
         }
         //if there are error messages show error alert otherwise create driver and show alert
         if (!str.isEmpty()) {
