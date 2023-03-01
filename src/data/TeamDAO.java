@@ -1,7 +1,9 @@
 package data;
 
+import jdk.jfr.Description;
 import practicumopdracht.models.Team;
 
+import java.lang.annotation.Inherited;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,10 +16,19 @@ import java.util.List;
 public abstract class TeamDAO implements DAO<Team> {
     protected List<Team> objects;
 
+    /**
+     * Constructor
+     * initiates new list.
+     */
     public TeamDAO() {
         objects = new ArrayList<>();
     }
 
+    /**
+     * get a team from its given id
+     * @param id - id of a team
+     * @return team corresponding to the given id
+     */
     public Team getById(int id) {
         try {
             return objects.get(id);
@@ -26,6 +37,11 @@ public abstract class TeamDAO implements DAO<Team> {
         }
     }
 
+    /**
+     * Get the id correspondig to a team
+     * @param team - a team to find the id of
+     * @return id of the team or -1 if the team isn't in the list.
+     */
     public int getIdFor(Team team) {
         return objects.contains(team) ? objects.indexOf(team) : -1;
     }

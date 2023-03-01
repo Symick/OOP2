@@ -15,6 +15,11 @@ import java.util.Scanner;
  */
 public class TextTeamDAO extends TeamDAO{
     private static final String FILENAME = "resources/teams.txt";
+
+    /**
+     * Load in all the data found in text file
+     * @return returns true for successfully load otherwise false if something went wrong.
+     */
     @Override
     public boolean load() {
         File file = new File(FILENAME);
@@ -46,6 +51,10 @@ public class TextTeamDAO extends TeamDAO{
         return false;
     }
 
+    /**
+     * save in all the data found in text file
+     * @return returns true for successfully save otherwise false if something went wrong.
+     */
     @Override
     public boolean save() {
         File file = new File(FILENAME);

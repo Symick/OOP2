@@ -6,9 +6,19 @@ import practicumopdracht.models.Team;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Abstract class for DriverDAO with basic operation used for each individual driver dao
+ *
+ * @author Julian
+ */
 public abstract class DriverDAO implements DAO<Driver> {
     protected List<Driver> objects;
 
+    /**
+     * Constructor
+     *
+     * initiates new list
+     */
     public DriverDAO() {
         objects = new ArrayList<>();
     }
@@ -18,6 +28,11 @@ public abstract class DriverDAO implements DAO<Driver> {
         return objects;
     }
 
+    /**
+     * Get all drivers driving for a certain team
+     * @param object - team object which drivers need to be found for
+     * @return a list of drivers driving for a certain team
+     */
     public List<Driver> getAllFor(Team object) {
         List<Driver> driversForTeam = new ArrayList<>();
         for (Driver driver: objects) {

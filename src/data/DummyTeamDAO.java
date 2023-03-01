@@ -2,7 +2,13 @@ package data;
 
 import practicumopdracht.models.Team;
 
+/**
+ * Dummy dao for team objects
+ *
+ * @author Julian Kruithof
+ */
 public class DummyTeamDAO extends TeamDAO{
+
     @Override
     public boolean save() {
         return false;

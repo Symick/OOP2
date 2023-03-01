@@ -4,10 +4,7 @@ package practicumopdracht.views;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import practicumopdracht.models.Team;
 
 /**
@@ -24,6 +21,7 @@ public class TeamView extends View {
     private TextField nameTxf, firstEntryYearTxf, championshipTxf;
     private CheckBox isActiveCheckbox;
     private ListView<Team> teams;
+    private Menu menu;
 
 
     /**
@@ -34,7 +32,14 @@ public class TeamView extends View {
     @Override
     protected Parent initializeView() {
 
-
+        BorderPane applicationContainer = new BorderPane();
+        MenuBar mb = new MenuBar();
+        menu = new Menu("file");
+        MenuItem load = new MenuItem("load");
+        MenuItem save = new MenuItem("save");
+        MenuItem close = new MenuItem("close application");
+        menu.getItems().addAll(load, save, close);
+        mb.getMenus().add(menu);
         //create vBox pane
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(SPACING));
@@ -88,7 +93,10 @@ public class TeamView extends View {
         vBox.getChildren().addAll(gridPane, saveBtn, teamCrudContainer);
         vBox.setSpacing(SPACING);
 
-        return vBox;
+        applicationContainer.setTop(mb);
+        applicationContainer.setCenter(vBox);
+
+        return applicationContainer;
     }
 
     public Button getCreateBtn() {
@@ -125,5 +133,9 @@ public class TeamView extends View {
 
     public ListView<Team> getListView() {
         return teams;
+    }
+
+    public Menu getMenu() {
+        return menu;
     }
 }

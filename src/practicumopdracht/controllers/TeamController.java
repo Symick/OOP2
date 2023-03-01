@@ -2,16 +2,19 @@ package practicumopdracht.controllers;
 
 import data.DriverDAO;
 import data.TeamDAO;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Menu;
 import practicumopdracht.MainApplication;
 import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
 import practicumopdracht.views.TeamView;
 import practicumopdracht.views.View;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -36,21 +39,22 @@ public class TeamController extends Controller {
     public TeamController() {
         driverDAO = MainApplication.getDriverDAO();
         teamDAO = MainApplication.getTeamDAO();
-
-
         teamView = new TeamView();
-        //fill in listview
-        List<Team> teams = teamDAO.getAll();
-        ObservableList<Team> observableList = FXCollections.observableList(teams);
-        if (teamView.getListView().getItems().isEmpty()) {
-            teamView.getListView().setItems(observableList);
-        }
+
+        Menu menu = teamView.getMenu();
+
+        menu.getItems().get(0).setOnAction(actionEvent -> handleLoad());
+        menu.getItems().get(1).setOnAction(actionEvent -> handleSave(createConfirmAlert("Saving...", "Are you sure you want to save your data")));
+        menu.getItems().get(2).setOnAction(actionEvent -> handleClose());
+
+        loadListView();
+
         //listening for change of selection in listview
         teamView.getListView()
                 .getSelectionModel().
                 selectedItemProperty().
                 addListener((observable -> {
-                    if (teamView.getListView().getSelectionModel().getSelectedItem() == null){
+                    if (teamView.getListView().getSelectionModel().getSelectedItem() == null) {
                         handleNewTeam();
                     } else {
                         teamSelected = true;
@@ -63,6 +67,59 @@ public class TeamController extends Controller {
         teamView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteTeam());
         teamView.getSaveBtn().setOnAction(actionEvent -> handleSaveTeam());
         teamView.getSwitchViewBtn().setOnAction(actionEvent -> handleSwitchView());
+    }
+
+    /**
+     * Handle event when load button is clicked.
+     * For both DAO's the load function is called and listview is filled
+     * Give an Alert to show the result of the load
+     */
+    private void handleLoad() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("load");
+        if (teamDAO.load() && driverDAO.load()) {
+            alert.setHeaderText("Successfully loaded data");
+            loadListView();
+        } else {
+            alert.setHeaderText("Something went wrong loading the data.");
+        }
+        alert.showAndWait();
+    }
+
+    /**
+     * Handle event when save button is clicked
+     * use the save method for both dao's
+     * give confirmation alert for saving.
+     *
+     * @param confirm - alert with the type confirmation.
+     */
+    private void handleSave(Alert confirm) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setTitle("save");
+        Optional<ButtonType> result = confirm.showAndWait();
+
+        //check if ok button is clicked if not abort save
+        if (result.isPresent() && result.get() != ButtonType.OK) {
+            info.setHeaderText("Save aborted");
+            info.showAndWait();
+            return;
+        }
+        if (teamDAO.save() && driverDAO.save()) {
+            info.setHeaderText("Successfully saved data");
+        } else {
+            info.setHeaderText("Something went wrong while saving data!");
+        }
+        info.showAndWait();
+    }
+
+    /**
+     * handle close event when close button is clicked
+     * ask user if they want to save data before closing
+     * then close the application.
+     */
+    private void handleClose() {
+        handleSave(createConfirmAlert("Closing...", "Do you want to save data before closing the data?"));
+        Platform.exit();
     }
 
     /**
@@ -99,7 +156,7 @@ public class TeamController extends Controller {
 
         //remove drivers driving for the team that has been removed.
         List<Driver> drivers = driverDAO.getAllFor(team);
-        for (Driver driver: drivers) {
+        for (Driver driver : drivers) {
             driverDAO.remove(driver);
         }
         teamView.getListView().getSelectionModel().clearSelection();
@@ -122,7 +179,7 @@ public class TeamController extends Controller {
             teamView.getNameTxf().setStyle("-fx-border-color: RED");
         }
         //check if first entry year is an integer
-        if (!isInteger(teamView.getFirstEntryYearTxf().getText())){
+        if (!isInteger(teamView.getFirstEntryYearTxf().getText())) {
             str.append("-Please enter a number in the 'first competed in year' field ! For example 2004\n");
             teamView.getFirstEntryYearTxf().setStyle("-fx-border-color: RED");
         } else {
@@ -130,7 +187,7 @@ public class TeamController extends Controller {
             LocalDate now = LocalDate.now();
             final int START_FORMULA_1 = 1950;
             if (Integer.parseInt(teamView.getFirstEntryYearTxf().getText()) < START_FORMULA_1
-            || Integer.parseInt(teamView.getFirstEntryYearTxf().getText()) > now.getYear()) {
+                    || Integer.parseInt(teamView.getFirstEntryYearTxf().getText()) > now.getYear()) {
                 str.append("-A team couldn't have entered formula 1 before " + START_FORMULA_1 + " and after " + now.getYear() + "!\n");
                 teamView.getFirstEntryYearTxf().setStyle("-fx-border-color: RED");
             }
@@ -142,7 +199,7 @@ public class TeamController extends Controller {
         }
 
         //show correct Alert depending on error handling
-        if(!str.isEmpty()) {
+        if (!str.isEmpty()) {
             str.insert(0, "There where some mistakes: \n");
             warning.setHeaderText(str.toString());
             warning.showAndWait();
@@ -173,8 +230,7 @@ public class TeamController extends Controller {
     private void handleSwitchView() {
         if (teamSelected) {
             MainApplication.switchController(new DriverController(teamView.getListView().getItems().get(selectedTeam)));
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("No selection");
             alert.setHeaderText("Please select a team in the list before switching");
@@ -189,7 +245,33 @@ public class TeamController extends Controller {
     }
 
     /**
+     * Create an alert with the type of confirmation
+     *
+     * @param title      - title of the alert
+     * @param headerText - header text of the alert
+     * @return a new alert with the type of confirmation
+     */
+    private Alert createConfirmAlert(String title, String headerText) {
+        Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
+        confirm.setTitle(title);
+        confirm.setHeaderText(headerText);
+        return confirm;
+    }
+
+    /**
+     * Load in the team object into the listview
+     */
+    private void loadListView() {
+        List<Team> teams = teamDAO.getAll();
+        ObservableList<Team> observableList = FXCollections.observableList(teams);
+        teamView.getListView().setItems(observableList);
+
+    }
+
+
+    /**
      * get the current view in place
+     *
      * @return a teamView instance
      */
     @Override

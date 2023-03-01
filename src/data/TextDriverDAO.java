@@ -10,10 +10,20 @@ import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+/**
+ * TextDAO for teh driver objects
+ *
+ * @author Julian Kruithof
+ */
 public class TextDriverDAO extends DriverDAO {
     private static final String FILENAME = "resources/drivers.txt";
     private TeamDAO teamDAO = MainApplication.getTeamDAO();
     @Override
+
+    /**
+     * Load in all the data found in text file
+     * @return returns true for successfully load otherwise false if something went wrong.
+     */
     public boolean load() {
         File file = new File(FILENAME);
         objects.clear();
@@ -43,6 +53,10 @@ public class TextDriverDAO extends DriverDAO {
         return false;
     }
 
+    /**
+     * save in all the data found in text file
+     * @return returns true for successfully save otherwise false if something went wrong.
+     */
     @Override
     public boolean save() {
         File file = new File(FILENAME);
