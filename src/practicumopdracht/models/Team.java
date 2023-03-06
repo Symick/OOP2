@@ -69,9 +69,10 @@ public class Team {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Team team = (Team) o;
-        return firstEntryYear == team.firstEntryYear && active == team.active && teamChampionships == team.teamChampionships && name.equals(team.name);
+        if (o instanceof Team team) {
+            return firstEntryYear == team.firstEntryYear && active == team.active && teamChampionships == team.teamChampionships && name.equals(team.name);
+        }
+        return false;
     }
 
     @Override
