@@ -75,10 +75,10 @@ public class DriverController extends Controller {
             return;
         }
 
-        driverView.getIsActiveCheckbox().setSelected(false);
         driverView.getListView().getSelectionModel().clearSelection();
         clearTextFields(driverView.getChampionshipsTfx(), driverView.getRoleTfx(), driverView.getPointsTfx(), driverView.getCompletedRacesTfx(),
                 driverView.getNameTxf());
+        driverView.getIsActiveCheckbox().setSelected(false);
         driverView.getBirthdatePicker().setValue(null);
         driverSelected = false;
     }
@@ -165,9 +165,8 @@ public class DriverController extends Controller {
         if (driverView.getBirthdatePicker().getValue() == null) {
             str.append("-Please enter a valid birthdate! Use the format dd-mm-yyyy\n");
             driverView.getBirthdatePicker().setStyle("-fx-border-color: RED");
-        } else {
-            LocalDate birthday = driverView.getBirthdatePicker().getValue();
         }
+
         //if there are error messages show error alert otherwise create driver and show alert
         if (!str.isEmpty()) {
             str.insert(0, "There where some mistakes: \n");
@@ -200,6 +199,11 @@ public class DriverController extends Controller {
                         Integer.parseInt(driverView.getChampionshipsTfx().getText())
                 );
                 driverView.getListView().getItems().add(driver);
+
+                clearTextFields(driverView.getChampionshipsTfx(), driverView.getRoleTfx(), driverView.getPointsTfx(), driverView.getCompletedRacesTfx(),
+                        driverView.getNameTxf());
+                driverView.getIsActiveCheckbox().setSelected(false);
+                driverView.getBirthdatePicker().setValue(null);
             }
             driverDAO.addOrUpdate(driver);
 

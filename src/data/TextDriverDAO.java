@@ -69,6 +69,7 @@ public class TextDriverDAO extends DriverDAO {
                 printWriter.println(driver.getName());
                 printWriter.println(driver.getRole());
                 int belongsTo = teamDAO.getIdFor(driver.getBelongsTo());
+                System.out.println(belongsTo);
                 printWriter.printf("%d %s %d %d %.2f %s\n", belongsTo, driver.getBirthday(), driver.getChampionships(),
                         driver.getCompletedRaces(), driver.getPoints(), driver.isActive());
             }

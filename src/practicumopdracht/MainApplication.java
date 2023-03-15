@@ -15,8 +15,8 @@ public class MainApplication extends Application {
     private final static int WIDTH = 640;
     private final String TITLE = String.format("Practicumopdracht OOP2 - %s", Main.studentNaam);
     private static Stage stage;
-    private static TeamDAO teamDAO = new TextTeamDAO();
-    private static DriverDAO driverDAO = new TextDriverDAO();
+    private static TeamDAO teamDAO = new BinaryTeamDAO();
+    private static DriverDAO driverDAO = new ObjectDriverDAO();
 
     @Override
     public void start(Stage stage) {

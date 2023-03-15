@@ -217,7 +217,11 @@ public class TeamController extends Controller {
             } else {
                 team = new Team(teamView.getNameTxf().getText(), Integer.parseInt(teamView.getFirstEntryYearTxf().getText()),
                         teamView.getIsActiveCheckbox().isSelected(), Integer.parseInt(teamView.getChampionshipTxf().getText()));
+
                 teamView.getListView().getItems().add(team);
+
+                clearTextFields(teamView.getNameTxf(), teamView.getChampionshipTxf(), teamView.getFirstEntryYearTxf());
+                teamView.getIsActiveCheckbox().setSelected(false);
             }
             teamDAO.addOrUpdate(team);
         }

@@ -2,6 +2,7 @@ package practicumopdracht.models;
 
 import practicumopdracht.models.Team;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -10,8 +11,8 @@ import java.time.format.DateTimeFormatter;
  *
  * @author Julian Kruithof
  */
-public class Driver {
-    private Team belongsTo;
+public class Driver implements Serializable {
+    private transient Team belongsTo;
     private String role;
     private String name;
     private LocalDate birthday;
