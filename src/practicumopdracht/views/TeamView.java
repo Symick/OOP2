@@ -21,7 +21,8 @@ public class TeamView extends View {
     private TextField nameTxf, firstEntryYearTxf, championshipTxf;
     private CheckBox isActiveCheckbox;
     private ListView<Team> teams;
-    private Menu menu;
+    private Menu fileMenu;
+    private Menu sortMenu;
 
 
     /**
@@ -34,12 +35,19 @@ public class TeamView extends View {
 
         BorderPane applicationContainer = new BorderPane();
         MenuBar mb = new MenuBar();
-        menu = new Menu("file");
+
+        fileMenu = new Menu("file");
         MenuItem load = new MenuItem("load");
         MenuItem save = new MenuItem("save");
         MenuItem close = new MenuItem("close application");
-        menu.getItems().addAll(load, save, close);
-        mb.getMenus().add(menu);
+        fileMenu.getItems().addAll(load, save, close);
+
+        sortMenu = new Menu("sort");
+        MenuItem ascending = new MenuItem("name (A-Z)");
+        MenuItem descending = new MenuItem("name (Z-A)");
+        sortMenu.getItems().addAll(ascending, descending);
+
+        mb.getMenus().addAll(fileMenu, sortMenu);
         //create vBox pane
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(SPACING));
@@ -135,7 +143,11 @@ public class TeamView extends View {
         return teams;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public Menu getFileMenu() {
+        return fileMenu;
+    }
+
+    public Menu getSortMenu() {
+        return sortMenu;
     }
 }

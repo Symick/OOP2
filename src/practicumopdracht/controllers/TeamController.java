@@ -1,5 +1,6 @@
 package practicumopdracht.controllers;
 
+import comperators.TeamNameComperator;
 import data.DriverDAO;
 import data.TeamDAO;
 import javafx.application.Platform;
@@ -29,6 +30,7 @@ public class TeamController extends Controller {
     private TeamView teamView;
     private TeamDAO teamDAO;
     private DriverDAO driverDAO;
+    private TeamNameComperator nameComperator;
     private boolean teamSelected = false;
     private int selectedTeam;
 
@@ -40,12 +42,24 @@ public class TeamController extends Controller {
         driverDAO = MainApplication.getDriverDAO();
         teamDAO = MainApplication.getTeamDAO();
         teamView = new TeamView();
+        nameComperator = new TeamNameComperator(false);
+        Menu fileMenu = teamView.getFileMenu();
 
-        Menu menu = teamView.getMenu();
+        //eventlisteners for file menu options load, save and close
+        fileMenu.getItems().get(0).setOnAction(actionEvent -> handleLoad());
+        fileMenu.getItems().get(1).setOnAction(actionEvent -> handleSave(createConfirmAlert("Saving...", "Are you sure you want to save your data")));
+        fileMenu.getItems().get(2).setOnAction(actionEvent -> handleClose());
 
-        menu.getItems().get(0).setOnAction(actionEvent -> handleLoad());
-        menu.getItems().get(1).setOnAction(actionEvent -> handleSave(createConfirmAlert("Saving...", "Are you sure you want to save your data")));
-        menu.getItems().get(2).setOnAction(actionEvent -> handleClose());
+        //eventlisteners for sort menu options ascending and descending
+        Menu sortMenu = teamView.getSortMenu();
+        sortMenu.getItems().get(0).setOnAction(actionEvent -> {
+            nameComperator.setSortDescending(false);
+            sortListView();
+        });
+        sortMenu.getItems().get(1).setOnAction(actionEvent -> {
+            nameComperator.setSortDescending(true);
+            sortListView();
+        });
 
         loadListView();
 
@@ -62,6 +76,7 @@ public class TeamController extends Controller {
                         loadInputFields(teamView.getListView().getSelectionModel().getSelectedItem());
                     }
                 }));
+
 
         teamView.getCreateBtn().setOnAction(actionEvent -> handleNewTeam());
         teamView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteTeam());
@@ -161,6 +176,8 @@ public class TeamController extends Controller {
         }
         teamView.getListView().getSelectionModel().clearSelection();
         teamSelected = false;
+
+        sortListView();
     }
 
     /**
@@ -224,6 +241,7 @@ public class TeamController extends Controller {
                 teamView.getIsActiveCheckbox().setSelected(false);
             }
             teamDAO.addOrUpdate(team);
+            sortListView();
         }
 
     }
@@ -270,6 +288,11 @@ public class TeamController extends Controller {
         ObservableList<Team> observableList = FXCollections.observableList(teams);
         teamView.getListView().setItems(observableList);
 
+        sortListView();
+    }
+
+    private void sortListView() {
+        FXCollections.sort(teamView.getListView().getItems(), nameComperator);
     }
 
 
