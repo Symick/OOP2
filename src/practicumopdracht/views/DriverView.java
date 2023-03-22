@@ -3,6 +3,9 @@ package practicumopdracht.views;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -10,6 +13,8 @@ import javafx.scene.layout.VBox;
 import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
 import practicumopdracht.utils.LocalDateConverter;
+
+import java.awt.*;
 
 /**
  * view of a driver
@@ -27,6 +32,7 @@ public class DriverView extends View {
     private CheckBox isActiveCheckbox;
     private ComboBox<Team> teams;
     private ListView<Driver> drivers;
+    private ToggleGroup  radioButtonGroup;
 
     /**
      * Create the look of the driver view
@@ -106,8 +112,21 @@ public class DriverView extends View {
         //change text color of buttons
         setWhiteTextColor(saveBtn, createBtn, deleteBtn);
 
-        vBox.getChildren().addAll(gridPane, saveBtn, teamCrudContainer);
+        //add radiobuttons to the view
+        HBox radioButtonContainer = new HBox();
+        radioButtonGroup = new ToggleGroup();
+        RadioButton rb1 = new RadioButton("name (A-Z)");
+        RadioButton rb2 = new RadioButton("name (Z-A)");
+        RadioButton rb3 = new RadioButton("championship (ASC)");
+        RadioButton rb4 = new RadioButton("championship (DESC)");
+
+        radioButtonGroup.getToggles().addAll(rb1, rb2, rb3, rb4);
+        radioButtonContainer.getChildren().addAll(rb1, rb2, rb3, rb4);
+        radioButtonContainer.setSpacing(SPACING);
+
+        vBox.getChildren().addAll(gridPane, saveBtn, teamCrudContainer, radioButtonContainer);
         vBox.setSpacing(SPACING);
+
 
         return vBox;
     }
@@ -162,5 +181,9 @@ public class DriverView extends View {
 
     public ListView<Driver> getListView() {
         return drivers;
+    }
+
+    public ToggleGroup getRadioButtonGroup() {
+        return radioButtonGroup;
     }
 }

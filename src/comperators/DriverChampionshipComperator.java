@@ -20,7 +20,7 @@ public class DriverChampionshipComperator implements Comparator<Driver> {
             int compare = Integer.compare(o1.getChampionships(), o2.getChampionships());
             return compare == 0 ? driverNameComperator.compare(o1, o2) : compare;
         }
-        int compare = Integer.compare(o2.getChampionships(), o2.getChampionships());
+        int compare = Integer.compare(o2.getChampionships(), o1.getChampionships());
         return compare == 0 ? driverNameComperator.compare(o1, o2) : compare;
     }
 }

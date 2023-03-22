@@ -1,11 +1,12 @@
 package practicumopdracht.controllers;
 
+import comperators.DriverChampionshipComperator;
+import comperators.DriverNameComperator;
 import data.DriverDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
 
-import javafx.scene.control.ButtonType;
 import practicumopdracht.MainApplication;
 import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
@@ -13,6 +14,7 @@ import practicumopdracht.models.Team;
 import practicumopdracht.views.DriverView;
 import practicumopdracht.views.View;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +28,7 @@ public class DriverController extends Controller {
     private DriverView driverView;
     private DriverDAO driverDAO;
     private boolean driverSelected;
-
+    private Comparator<Driver> comparator = new DriverNameComperator(false);
     /**
      * Constructor for a DriverController
      * initiates a new view and add listeners to the buttons
@@ -46,6 +48,7 @@ public class DriverController extends Controller {
         //load in drivers from a team with was selected before view switch
         loadListView(team);
 
+        //handle the event when a driver is selected
         driverView.getListView()
                 .getSelectionModel().
                 selectedItemProperty().
@@ -58,6 +61,12 @@ public class DriverController extends Controller {
                     }
                 }));
 
+        driverView.getRadioButtonGroup().getToggles().get(0).setSelected(true);
+        driverView.getRadioButtonGroup().selectedToggleProperty().addListener((observable ->
+                initializeComperator((RadioButton) driverView.getRadioButtonGroup().getSelectedToggle())));
+
+
+        // add eventlisteners to the all the buttons in the view
         driverView.getCreateBtn().setOnAction(actionEvent -> handleNewDriver());
         driverView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteDriver());
         driverView.getSaveBtn().setOnAction(actionEvent -> handleSaveDriver());
@@ -100,8 +109,8 @@ public class DriverController extends Controller {
         }
         driverView.getListView().getItems().remove(driver);
         driverDAO.remove(driver);
-
         driverView.getListView().getSelectionModel().clearSelection();
+        sortListView();
         driverSelected = false;
     }
 
@@ -205,6 +214,7 @@ public class DriverController extends Controller {
                 driverView.getBirthdatePicker().setValue(null);
             }
             driverDAO.addOrUpdate(driver);
+            sortListView();
 
         }
 
@@ -234,6 +244,31 @@ public class DriverController extends Controller {
         List<Driver> drivers = driverDAO.getAllFor(team);
         ObservableList<Driver> observableList = FXCollections.observableList(drivers);
         driverView.getListView().setItems(observableList);
+        sortListView();
+    }
+
+    private void initializeComperator(RadioButton button) {
+        switch (button.getText()) {
+            case "name (Z-A)":
+                comparator = new DriverNameComperator(true);
+                sortListView();
+                break;
+            case "championship (ASC)":
+                comparator = new DriverChampionshipComperator(false);
+                sortListView();
+                break;
+            case "championship (DESC)":
+                comparator = new DriverChampionshipComperator(true);
+                sortListView();
+                break;
+            default:
+                comparator = new DriverNameComperator(false);
+                sortListView();
+                break;
+        }
+    }
+    private void sortListView() {
+        FXCollections.sort(driverView.getListView().getItems(), comparator);
     }
 
     @Override
