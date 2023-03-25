@@ -90,8 +90,15 @@ public class TeamController extends Controller {
      * Give an Alert to show the result of the load
      */
     private void handleLoad() {
+        Alert confirm = createConfirmAlert("You sure?", "Do you want to load in the data");
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("load");
+        Optional<ButtonType> result = confirm.showAndWait();
+        if (result.isPresent() && result.get() != ButtonType.OK) {
+            alert.setHeaderText("load aborted");
+            alert.showAndWait();
+            return;
+        }
         if (teamDAO.load() && driverDAO.load()) {
             alert.setHeaderText("Successfully loaded data");
             loadListView();
