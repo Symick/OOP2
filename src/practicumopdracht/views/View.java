@@ -48,10 +48,11 @@ public abstract class View {
 
     /**
      * change the text color of a variable amount of buttons to white, using the spread operator.
+     *
      * @param buttons a variable amount of buttons
      */
-    protected void setWhiteTextColor(Button ...buttons) {
-        for (Button button: buttons) {
+    protected void setWhiteTextColor(Button... buttons) {
+        for (Button button : buttons) {
             button.setTextFill(Color.WHITE);
         }
     }

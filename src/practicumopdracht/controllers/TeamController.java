@@ -1,24 +1,25 @@
 package practicumopdracht.controllers;
 
-import comperators.TeamNameComperator;
+import comparators.TeamNameComparator;
 import data.DriverDAO;
 import data.TeamDAO;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
-
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import practicumopdracht.MainApplication;
 import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
+import practicumopdracht.utils.Validator;
 import practicumopdracht.views.TeamView;
 import practicumopdracht.views.View;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+
 
 /**
  * Controller for the Team model and view
@@ -30,7 +31,7 @@ public class TeamController extends Controller {
     private TeamView teamView;
     private TeamDAO teamDAO;
     private DriverDAO driverDAO;
-    private TeamNameComperator nameComperator;
+    private TeamNameComparator teamNameComparator;
     private boolean teamSelected = false;
     private int selectedTeam;
 
@@ -42,7 +43,7 @@ public class TeamController extends Controller {
         driverDAO = MainApplication.getDriverDAO();
         teamDAO = MainApplication.getTeamDAO();
         teamView = new TeamView();
-        nameComperator = new TeamNameComperator(false);
+        teamNameComparator = new TeamNameComparator(false);
         Menu fileMenu = teamView.getFileMenu();
 
         //eventlisteners for file menu options load, save and close
@@ -53,11 +54,11 @@ public class TeamController extends Controller {
         //eventlisteners for sort menu options ascending and descending
         Menu sortMenu = teamView.getSortMenu();
         sortMenu.getItems().get(0).setOnAction(actionEvent -> {
-            nameComperator.setSortDescending(false);
+            teamNameComparator.setSortDescending(false);
             sortListView();
         });
         sortMenu.getItems().get(1).setOnAction(actionEvent -> {
-            nameComperator.setSortDescending(true);
+            teamNameComparator.setSortDescending(true);
             sortListView();
         });
 
@@ -76,7 +77,6 @@ public class TeamController extends Controller {
                         loadInputFields(teamView.getListView().getSelectionModel().getSelectedItem());
                     }
                 }));
-
 
         teamView.getCreateBtn().setOnAction(actionEvent -> handleNewTeam());
         teamView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteTeam());
@@ -161,11 +161,11 @@ public class TeamController extends Controller {
      * handle an event when the delete button is clicked. Team is removed from listview and DAO
      */
     private void handleDeleteTeam() {
-
         Team team = teamView.getListView().getSelectionModel().getSelectedItem();
         if (team == null) {
             return;
         }
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("You sure?");
         alert.setHeaderText("Are you sure you want to delete the team:" + team.getName());
@@ -183,7 +183,6 @@ public class TeamController extends Controller {
         }
         teamView.getListView().getSelectionModel().clearSelection();
         teamSelected = false;
-
         sortListView();
     }
 
@@ -202,8 +201,9 @@ public class TeamController extends Controller {
             str.append("-Team name must be filled in!\n");
             teamView.getNameTxf().setStyle("-fx-border-color: RED");
         }
+
         //check if first entry year is an integer
-        if (!isInteger(teamView.getFirstEntryYearTxf().getText())) {
+        if (!Validator.isInteger(teamView.getFirstEntryYearTxf().getText())) {
             str.append("-Please enter a number in the 'first competed in year' field ! For example 2004\n");
             teamView.getFirstEntryYearTxf().setStyle("-fx-border-color: RED");
         } else {
@@ -216,8 +216,9 @@ public class TeamController extends Controller {
                 teamView.getFirstEntryYearTxf().setStyle("-fx-border-color: RED");
             }
         }
+
         //check if championship is an integer
-        if (!isInteger(teamView.getChampionshipTxf().getText())) {
+        if (!Validator.isInteger(teamView.getChampionshipTxf().getText())) {
             str.append("-Please enter a number in the 'championships' field!\n");
             teamView.getChampionshipTxf().setStyle("-fx-border-color: RED");
         }
@@ -250,7 +251,6 @@ public class TeamController extends Controller {
             teamDAO.addOrUpdate(team);
             sortListView();
         }
-
     }
 
     /**
@@ -298,16 +298,13 @@ public class TeamController extends Controller {
         sortListView();
     }
 
+    /**
+     * Sort the listview with the teamNameComparator
+     */
     private void sortListView() {
-        FXCollections.sort(teamView.getListView().getItems(), nameComperator);
+        FXCollections.sort(teamView.getListView().getItems(), teamNameComparator);
     }
 
-
-    /**
-     * get the current view in place
-     *
-     * @return a teamView instance
-     */
     @Override
     public View getView() {
         return teamView;

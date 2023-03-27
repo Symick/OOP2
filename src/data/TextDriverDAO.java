@@ -11,7 +11,7 @@ import java.time.LocalDate;
 import java.util.Scanner;
 
 /**
- * TextDAO for teh driver objects
+ * TextDAO for the driver model
  *
  * @author Julian Kruithof
  */
@@ -21,13 +21,14 @@ public class TextDriverDAO extends DriverDAO {
 
     /**
      * Load in all the data found in text file
+     *
      * @return returns true for successfully load otherwise false if something went wrong.
      */
     @Override
     public boolean load() {
         File file = new File(FILENAME);
         objects.clear();
-        try(Scanner input = new Scanner(file)) {
+        try (Scanner input = new Scanner(file)) {
             int listSize = input.nextInt();
             //clear buffer
             input.nextLine();
@@ -41,7 +42,7 @@ public class TextDriverDAO extends DriverDAO {
                 int completedRaces = driverInfo.nextInt();
                 double points = driverInfo.nextDouble();
                 boolean active = driverInfo.next().equals("true");
-                objects.add(new Driver(belongsTo, role, name, birthday, completedRaces, active,points, championship));
+                objects.add(new Driver(belongsTo, role, name, birthday, completedRaces, active, points, championship));
                 driverInfo.close();
             }
             return true;
@@ -55,6 +56,7 @@ public class TextDriverDAO extends DriverDAO {
 
     /**
      * save in all the data found in text file
+     *
      * @return returns true for successfully save otherwise false if something went wrong.
      */
     @Override
@@ -65,7 +67,7 @@ public class TextDriverDAO extends DriverDAO {
             printWriter.println(objects.size());
 
             //write each driver in text file
-            for (Driver driver: objects) {
+            for (Driver driver : objects) {
                 printWriter.println(driver.getName());
                 printWriter.println(driver.getRole());
                 int belongsTo = teamDAO.getIdFor(driver.getBelongsTo());

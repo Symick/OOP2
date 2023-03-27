@@ -16,7 +16,6 @@ public abstract class DriverDAO implements DAO<Driver> {
 
     /**
      * Constructor
-     *
      * initiates new list
      */
     public DriverDAO() {
@@ -30,13 +29,14 @@ public abstract class DriverDAO implements DAO<Driver> {
 
     /**
      * Get all drivers driving for a certain team
+     *
      * @param object - team object which drivers need to be found for
      * @return a list of drivers driving for a certain team
      */
     public List<Driver> getAllFor(Team object) {
         List<Driver> driversForTeam = new ArrayList<>();
-        for (Driver driver: objects) {
-            if(driver.getBelongsTo().equals(object)) {
+        for (Driver driver : objects) {
+            if (driver.getBelongsTo().equals(object)) {
                 driversForTeam.add(driver);
             }
         }
@@ -45,7 +45,7 @@ public abstract class DriverDAO implements DAO<Driver> {
 
     @Override
     public void addOrUpdate(Driver object) {
-        if(objects.contains(object)) {
+        if (objects.contains(object)) {
             return;
         }
         objects.add(object);

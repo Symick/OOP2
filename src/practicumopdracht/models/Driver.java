@@ -1,7 +1,5 @@
 package practicumopdracht.models;
 
-import practicumopdracht.models.Team;
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -24,14 +22,14 @@ public class Driver implements Serializable {
     /**
      * Constructor
      *
-     * @param belongsTo - team driver has last driven for
-     * @param role - the role which the driver has in the team. (first, second, third, test, etc) driver
-     * @param name - name of driver
-     * @param birthday - birthday of drivers
+     * @param belongsTo      - team driver has last driven for
+     * @param role           - the role which the driver has in the team. (first, second, third, test, etc) driver
+     * @param name           - name of driver
+     * @param birthday       - birthday of drivers
      * @param completedRaces - amount of races driven in formula 1
-     * @param active - is currently driving for the team
-     * @param points - amount of points accumulated in formula 1
-     * @param championships - amount of driver championships won
+     * @param active         - is currently driving for the team
+     * @param points         - amount of points accumulated in formula 1
+     * @param championships  - amount of driver championships won
      */
     public Driver(Team belongsTo, String role, String name, LocalDate birthday, int completedRaces, boolean active, double points, int championships) {
         this.belongsTo = belongsTo;
@@ -42,6 +40,17 @@ public class Driver implements Serializable {
         this.active = active;
         this.points = points;
         this.championships = championships;
+    }
+
+    /**
+     * Format a LocalDate to the format dd-mm-yyyy
+     *
+     * @param date - a localDate object
+     * @return a string format of the given localDate in the dd-mm-yyyy format
+     */
+    private static String formatDate(LocalDate date) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        return date.format(formatter);
     }
 
     public Team getBelongsTo() {
@@ -108,14 +117,10 @@ public class Driver implements Serializable {
         this.championships = championships;
     }
 
-    private static String formatDate(LocalDate date) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        return date.format(formatter);
-    }
-
     @Override
     public String toString() {
         return String.format("%s\nrole: %s, birthday: %s, championships: %d\ncompleted races: %d, points: %.2f, %s",
-                name, role, formatDate(birthday), championships, completedRaces, points, active ? "active" : "not active");
+                name, role, formatDate(birthday), championships, completedRaces, points,
+                active ? "active" : "not active");
     }
 }

@@ -3,11 +3,11 @@ package data;
 import practicumopdracht.models.Team;
 
 /**
- * Dummy dao for team objects
+ * Dummy dao for team model
  *
  * @author Julian Kruithof
  */
-public class DummyTeamDAO extends TeamDAO{
+public class DummyTeamDAO extends TeamDAO {
 
     @Override
     public boolean save() {
@@ -19,7 +19,6 @@ public class DummyTeamDAO extends TeamDAO{
         objects.add(new Team("Red Bull Racing", 2005, true, 5));
         objects.add(new Team("Scuderia Ferrari", 1950, true, 16));
         objects.add(new Team("Spyker F1 Team", 2007, false, 0));
-
         return true;
     }
 }

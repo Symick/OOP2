@@ -9,8 +9,6 @@ import practicumopdracht.views.View;
  * @author Julian Kruithof
  */
 public abstract class Controller {
-    public abstract View getView();
-
     /**
      * clear the text from the textFields
      *
@@ -33,33 +31,5 @@ public abstract class Controller {
         }
     }
 
-    /**
-     * check if the given string is a parsable integer
-     *
-     * @param string
-     * @return true if string is an integer, false if not
-     */
-    protected static boolean isInteger(String string) {
-        try {
-            int num = Integer.parseInt(string);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    /**
-     * Check if a string is parsable to a double
-     * @param string
-     * @return true if string is a double, false if not
-     */
-    protected static boolean isDouble(String string) {
-        try {
-            double num = Double.parseDouble(string);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
+    public abstract View getView();
 }

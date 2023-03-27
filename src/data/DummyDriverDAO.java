@@ -1,14 +1,17 @@
 package data;
 
-import practicumopdracht.Main;
 import practicumopdracht.MainApplication;
 import practicumopdracht.models.Driver;
-import practicumopdracht.models.Team;
 
 import java.time.LocalDate;
 
+/**
+ * Dummy dao for driver model
+ *
+ * @author Julian Kruithof
+ */
 public class DummyDriverDAO extends DriverDAO {
-    DummyTeamDAO dummyTeamDAO = (DummyTeamDAO) MainApplication.getTeamDAO();
+    TeamDAO dummyTeamDAO = MainApplication.getTeamDAO();
 
     @Override
     public boolean save() {
@@ -23,7 +26,6 @@ public class DummyDriverDAO extends DriverDAO {
                 LocalDate.of(1990, 1, 26), 235, true, 1201, 0));
         objects.add(new Driver(dummyTeamDAO.getById(2), "Second Driver", "Markus Winkelhock",
                 LocalDate.of(1980, 6, 13), 1, false, 0, 0));
-
         return true;
     }
 }

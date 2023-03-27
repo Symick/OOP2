@@ -3,9 +3,6 @@ package practicumopdracht.views;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -13,8 +10,6 @@ import javafx.scene.layout.VBox;
 import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
 import practicumopdracht.utils.LocalDateConverter;
-
-import java.awt.*;
 
 /**
  * view of a driver
@@ -32,7 +27,7 @@ public class DriverView extends View {
     private CheckBox isActiveCheckbox;
     private ComboBox<Team> teams;
     private ListView<Driver> drivers;
-    private ToggleGroup  radioButtonGroup;
+    private ToggleGroup radioButtonGroup;
 
     /**
      * Create the look of the driver view
@@ -77,9 +72,8 @@ public class DriverView extends View {
         completedRacesTfx = new TextField();
         roleTfx = new TextField();
         birthdatePicker = new DatePicker();
-        isActiveCheckbox = new CheckBox();
-
         birthdatePicker.setConverter(new LocalDateConverter());
+        isActiveCheckbox = new CheckBox();
 
         teams = new ComboBox<>();
         teams.setPrefWidth(Double.MAX_VALUE);
@@ -126,8 +120,6 @@ public class DriverView extends View {
 
         vBox.getChildren().addAll(gridPane, saveBtn, teamCrudContainer, radioButtonContainer);
         vBox.setSpacing(SPACING);
-
-
         return vBox;
     }
 

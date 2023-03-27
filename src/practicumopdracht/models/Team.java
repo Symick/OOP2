@@ -16,9 +16,9 @@ public class Team {
     /**
      * Constructor
      *
-     * @param name - name of the formula 1 team
-     * @param firstEntryYear - year the team first entered formula 1
-     * @param active - detemines if team is currently operating in formula 1
+     * @param name              - name of the formula 1 team
+     * @param firstEntryYear    - year the team first entered formula 1
+     * @param active            - detemines if team is currently operating in formula 1
      * @param teamChampionships - amount of constructor championships won
      */
     public Team(String name, int firstEntryYear, boolean active, int teamChampionships) {
@@ -70,7 +70,10 @@ public class Team {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o instanceof Team team) {
-            return firstEntryYear == team.firstEntryYear && active == team.active && teamChampionships == team.teamChampionships && name.equals(team.name);
+            return firstEntryYear == team.firstEntryYear &&
+                    active == team.active &&
+                    teamChampionships == team.teamChampionships &&
+                    name.equals(team.name);
         }
         return false;
     }

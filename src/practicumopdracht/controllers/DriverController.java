@@ -1,16 +1,17 @@
 package practicumopdracht.controllers;
 
-import comperators.DriverChampionshipComperator;
-import comperators.DriverNameComperator;
+import comparators.DriverChampionshipComparator;
+import comparators.DriverNameComparator;
 import data.DriverDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.*;
-
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.RadioButton;
 import practicumopdracht.MainApplication;
 import practicumopdracht.models.Driver;
 import practicumopdracht.models.Team;
-
+import practicumopdracht.utils.Validator;
 import practicumopdracht.views.DriverView;
 import practicumopdracht.views.View;
 
@@ -28,7 +29,8 @@ public class DriverController extends Controller {
     private DriverView driverView;
     private DriverDAO driverDAO;
     private boolean driverSelected;
-    private Comparator<Driver> comparator = new DriverNameComperator(false);
+    private Comparator<Driver> comparator = new DriverNameComparator(false);
+
     /**
      * Constructor for a DriverController
      * initiates a new view and add listeners to the buttons
@@ -36,6 +38,7 @@ public class DriverController extends Controller {
     public DriverController(Team team) {
         driverView = new DriverView();
         driverDAO = MainApplication.getDriverDAO();
+
         //load in combobox
         List<Team> teams = MainApplication.getTeamDAO().getAll();
         ObservableList<Team> observableTeams = FXCollections.observableList(teams);
@@ -65,8 +68,7 @@ public class DriverController extends Controller {
         driverView.getRadioButtonGroup().selectedToggleProperty().addListener((observable ->
                 initializeComperator((RadioButton) driverView.getRadioButtonGroup().getSelectedToggle())));
 
-
-        // add eventlisteners to the all the buttons in the view
+        // add event listeners to the all the buttons in the view
         driverView.getCreateBtn().setOnAction(actionEvent -> handleNewDriver());
         driverView.getDeleteBtn().setOnAction(actionEvent -> handleDeleteDriver());
         driverView.getSaveBtn().setOnAction(actionEvent -> handleSaveDriver());
@@ -75,8 +77,7 @@ public class DriverController extends Controller {
 
     /**
      * Handle event when the new button is clicked.
-     * delected model in listview and clear the inputs to give the user the option to create a new
-     * Driver modal
+     * deselect model in listview and clear the inputs to give the user the option to create a new Driver modal
      */
     private void handleNewDriver() {
         if (!driverSelected) {
@@ -95,11 +96,11 @@ public class DriverController extends Controller {
      * handle event when delete button is clicked delete model from the listview
      */
     private void handleDeleteDriver() {
-
         Driver driver = driverView.getListView().getSelectionModel().getSelectedItem();
         if (driver == null) {
             return;
         }
+
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("You sure?");
         alert.setHeaderText("Are you sure you want to delete the driver: " + driver.getName());
@@ -107,6 +108,7 @@ public class DriverController extends Controller {
         if (result.isPresent() && result.get() != ButtonType.OK) {
             return;
         }
+
         driverView.getListView().getItems().remove(driver);
         driverDAO.remove(driver);
         driverView.getListView().getSelectionModel().clearSelection();
@@ -129,13 +131,13 @@ public class DriverController extends Controller {
         Alert info = new Alert(Alert.AlertType.INFORMATION);
         info.setTitle("Save");
         warning.setTitle("Save");
+
         //get input values
         String name = driverView.getNameTxf().getText();
         String role = driverView.getRoleTfx().getText();
         String championships = driverView.getChampionshipsTfx().getText();
         String points = driverView.getPointsTfx().getText();
         String completedRaces = driverView.getCompletedRacesTfx().getText();
-
 
         StringBuilder str = new StringBuilder();
 
@@ -152,19 +154,19 @@ public class DriverController extends Controller {
         }
 
         //check if championships is an integer
-        if (!isInteger(championships)) {
+        if (!Validator.isInteger(championships)) {
             str.append("-Please enter a number in the 'championships' field!\n");
             driverView.getChampionshipsTfx().setStyle("-fx-border-color: RED");
         }
 
         //check if completed races is an integer
-        if (!isInteger(completedRaces)) {
+        if (!Validator.isInteger(completedRaces)) {
             str.append("-Please enter a number in the 'completed races' field!\n");
             driverView.getCompletedRacesTfx().setStyle("-fx-border-color: RED");
         }
 
         // check if points is a double
-        if (!isDouble(points)) {
+        if (!Validator.isDouble(points)) {
             str.append("-Please enter a decimal number in the 'points' field!\n");
             driverView.getPointsTfx().setStyle("-fx-border-color: RED");
         }
@@ -207,7 +209,6 @@ public class DriverController extends Controller {
                         Integer.parseInt(driverView.getChampionshipsTfx().getText())
                 );
                 driverView.getListView().getItems().add(driver);
-
                 clearTextFields(driverView.getChampionshipsTfx(), driverView.getRoleTfx(), driverView.getPointsTfx(), driverView.getCompletedRacesTfx(),
                         driverView.getNameTxf());
                 driverView.getIsActiveCheckbox().setSelected(false);
@@ -215,9 +216,7 @@ public class DriverController extends Controller {
             }
             driverDAO.addOrUpdate(driver);
             sortListView();
-
         }
-
     }
 
     /**
@@ -250,23 +249,27 @@ public class DriverController extends Controller {
     private void initializeComperator(RadioButton button) {
         switch (button.getText()) {
             case "name (Z-A)":
-                comparator = new DriverNameComperator(true);
+                comparator = new DriverNameComparator(true);
                 sortListView();
                 break;
             case "championship (ASC)":
-                comparator = new DriverChampionshipComperator(false);
+                comparator = new DriverChampionshipComparator(false);
                 sortListView();
                 break;
             case "championship (DESC)":
-                comparator = new DriverChampionshipComperator(true);
+                comparator = new DriverChampionshipComparator(true);
                 sortListView();
                 break;
             default:
-                comparator = new DriverNameComperator(false);
+                comparator = new DriverNameComparator(false);
                 sortListView();
                 break;
         }
     }
+
+    /**
+     * Sort the driverListview depending on the comparator that is selected by the radiobuttons.
+     */
     private void sortListView() {
         FXCollections.sort(driverView.getListView().getItems(), comparator);
     }

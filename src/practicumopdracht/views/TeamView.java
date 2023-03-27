@@ -24,7 +24,6 @@ public class TeamView extends View {
     private Menu fileMenu;
     private Menu sortMenu;
 
-
     /**
      * initialize the view of a Team
      *
@@ -32,7 +31,6 @@ public class TeamView extends View {
      */
     @Override
     protected Parent initializeView() {
-
         BorderPane applicationContainer = new BorderPane();
         MenuBar mb = new MenuBar();
 
@@ -65,7 +63,7 @@ public class TeamView extends View {
         column2.setPercentWidth(75);
         gridPane.getColumnConstraints().addAll(column1, column2);
 
-        //initialize textfields
+        //initialize textFields
         nameTxf = new TextField();
         firstEntryYearTxf = new TextField();
         championshipTxf = new TextField();
@@ -84,9 +82,7 @@ public class TeamView extends View {
         teams = new ListView<>();
         teams.setPrefWidth(500);
 
-        /*
-         * styling of a vertical container containing buttons
-         */
+        //styling of a vertical container containing buttons
         VBox buttonContainer = new VBox();
         createBtn = createButton("New team", GREEN_COLOR);
         deleteBtn = createButton("Delete team", RED_COLOR);
@@ -103,7 +99,6 @@ public class TeamView extends View {
 
         applicationContainer.setTop(mb);
         applicationContainer.setCenter(vBox);
-
         return applicationContainer;
     }
 

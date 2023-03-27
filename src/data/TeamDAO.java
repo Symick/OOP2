@@ -43,7 +43,7 @@ public abstract class TeamDAO implements DAO<Team> {
      * @return id of the team or -1 if the team isn't in the list.
      */
     public int getIdFor(Team team) {
-        return objects.contains(team) ? objects.indexOf(team) : -1;
+        return objects.indexOf(team);
     }
 
     @Override

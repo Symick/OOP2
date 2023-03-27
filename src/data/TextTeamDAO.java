@@ -1,6 +1,5 @@
 package data;
 
-import practicumopdracht.MainApplication;
 import practicumopdracht.models.Team;
 
 import java.io.File;
@@ -9,25 +8,28 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 /**
- * DAO for saving objects into a textfile
+ * Text Dao for team model
  *
  * @author Julian Kruithof
  */
-public class TextTeamDAO extends TeamDAO{
+public class TextTeamDAO extends TeamDAO {
     private static final String FILENAME = "resources/teams.txt";
 
     /**
      * Load in all the data found in text file
+     *
      * @return returns true for successfully load otherwise false if something went wrong.
      */
     @Override
     public boolean load() {
         File file = new File(FILENAME);
+
         //clear the list before inserting the teams in file to make sure no duplicates are loaded
         objects.clear();
         try {
             Scanner input = new Scanner(file);
             int listSize = input.nextInt();
+
             //clear buffer
             input.nextLine();
 
@@ -53,26 +55,28 @@ public class TextTeamDAO extends TeamDAO{
 
     /**
      * save in all the data found in text file
+     *
      * @return returns true for successfully save otherwise false if something went wrong.
      */
     @Override
     public boolean save() {
         File file = new File(FILENAME);
         try (PrintWriter printWriter = new PrintWriter(file)) {
-
             //save the size of list, for the load loop
             printWriter.println(objects.size());
+
             //write each team in a separate line
             for (Team team : objects) {
                 printWriter.println(team.getName());
-                printWriter.printf("%d %s %d\n", team.getFirstEntryYear(), team.isActive(), team.getTeamChampionships());
+                printWriter.printf("%d %s %d\n",
+                        team.getFirstEntryYear(),
+                        team.isActive(),
+                        team.getTeamChampionships());
             }
             return true;
-
         } catch (FileNotFoundException exception) {
             System.err.println("File not Found");
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             System.err.println(ex.getMessage());
             ex.printStackTrace();
         }
