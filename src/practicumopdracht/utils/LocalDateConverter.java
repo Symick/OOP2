@@ -22,11 +22,11 @@ public class LocalDateConverter extends StringConverter<LocalDate> {
      */
     @Override
     public String toString(LocalDate localDate) {
-        {
-            if (localDate == null)
-                return "";
-            return DATE_TIME_FORMATTER.format(localDate);
+        if (localDate == null) {
+            return "";
         }
+        return DATE_TIME_FORMATTER.format(localDate);
+
     }
 
     /**

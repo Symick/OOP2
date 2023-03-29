@@ -1,11 +1,11 @@
-<diagram program="umletino" version="15.0.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>495</x><y>520</y><w>150</w><h>110</h></coordinates><panel_attributes>&lt;&lt;models&gt;&gt;
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><element><id>UMLClass</id><coordinates><x>476</x><y>637</y><w>105</w><h>77</h></coordinates><panel_attributes>&lt;&lt;models&gt;&gt;
 Team
 --
 -name: String
 -firstEntryYear: int
 -active: boolean
 -teamChampionship: int
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>795</x><y>510</y><w>150</w><h>170</h></coordinates><panel_attributes>&lt;&lt;models&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>651</x><y>630</y><w>105</w><h>119</h></coordinates><panel_attributes>&lt;&lt;models&gt;&gt;
 Driver
 --
 -name: String
@@ -15,17 +15,26 @@ Driver
 -role: String
 -active: boolean
 -points: double
--championships: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>635</x><y>580</y><w>180</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
+-championships: int</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>574</x><y>679</y><w>91</w><h>35</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2= 0..n
-drives for</panel_attributes><additional_attributes>10;20;160;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>235</x><y>330</y><w>160</w><h>50</h></coordinates><panel_attributes>Main
+drives for</panel_attributes><additional_attributes>10;20;110;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>14</x><y>49</y><w>112</w><h>35</h></coordinates><panel_attributes>Main
 --
-+main(args: String[]): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>235</x><y>210</y><w>170</w><h>70</h></coordinates><panel_attributes>MainApplication
++main(args: String[]): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>252</x><y>0</y><w>196</w><h>140</h></coordinates><panel_attributes>MainApplication
 --
--INITIAL_VIEW: View
+_-HEIGHT: int_
+_-WIDTH: int_
+_-TITLE: String_
+_stage: Stage_
+_teamDAO: TeamDAO_
+_driverDAO: DriverDAO_
+
 --
-+start(stage: Stage): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>305</x><y>270</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>245</x><y>90</y><w>140</w><h>40</h></coordinates><panel_attributes>&lt;&lt;javafx.application&gt;&gt;
-Application</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>305</x><y>120</y><w>30</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>565</x><y>190</y><w>290</w><h>130</h></coordinates><panel_attributes>&lt;&lt;views&gt;&gt;
++start(stage: Stage): void
+_+switchController(controller: Controller):void_
+_getTeamDAO(): TeamDAO_
+_getDriverDAO(): DriverDAO_</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>119</x><y>56</y><w>147</w><h>21</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>190;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>21</x><y>7</y><w>98</w><h>28</h></coordinates><panel_attributes>&lt;&lt;javafx.application&gt;&gt;
+Application</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>112</x><y>14</y><w>154</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;200;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>42</x><y>182</y><w>203</w><h>98</h></coordinates><panel_attributes>&lt;&lt;views&gt;&gt;
 /View/
 --
 -root: Parent
@@ -33,18 +42,153 @@ Application</panel_attributes><additional_attributes></additional_attributes></e
 +View()
 /#initializeView(): Parent/
 +getRoot(): Parent
-#createButton(text: String, color: String): Button</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>395</x><y>240</y><w>190</w><h>30</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>170;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>495</x><y>360</y><w>150</w><h>110</h></coordinates><panel_attributes>&lt;&lt;views&gt;&gt;
+#createButton(text: String, color: String): Button
+#setWhiteTextColor(buttons: Button[]): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>315</y><w>105</w><h>77</h></coordinates><panel_attributes>&lt;&lt;views&gt;&gt;
 TeamView
 --
 -SPACING: double
 -GREEN_COLOR: String
 -RED_COLOR: String
 --
-#initializeView(): Parent</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>795</x><y>360</y><w>150</w><h>110</h></coordinates><panel_attributes>&lt;&lt;views&gt;&gt;
+#initializeView(): Parent</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>140</x><y>315</y><w>105</w><h>77</h></coordinates><panel_attributes>&lt;&lt;views&gt;&gt;
 DriverView
 --
 -SPACING: double
 -GREEN_COLOR: String
 -RED_COLOR: String
 --
-#initializeView(): Parent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>555</x><y>310</y><w>180</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>160;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>705</x><y>310</y><w>180</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;160;50</additional_attributes></element></diagram>
+#initializeView(): Parent</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>35</x><y>273</y><w>126</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>160;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>140</x><y>273</y><w>63</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;70;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>91</x><y>441</y><w>189</w><h>70</h></coordinates><panel_attributes>&lt;&lt;utils&gt;&gt;
+LocalDateConverter
+--
+DATE_TIME_FORMATTER: DateTimeFormatter
+--
++toString(localDate: Localdate): String
++fromString(dateString: String): Localdate</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>182</x><y>385</y><w>21</w><h>70</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;80;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>140</x><y>525</y><w>84</w><h>28</h></coordinates><panel_attributes>&lt;&lt;javafx.util&gt;&gt;
+StringConverter&lt;T&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>175</x><y>504</y><w>21</w><h>35</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;30;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>462</x><y>196</y><w>182</w><h>70</h></coordinates><panel_attributes>&lt;&lt;controllers&gt;&gt;
+/Controller/
+--
+/+getView(): View/
+_#clearTextFields(textfields: TextField[]): void_
+_#resetBorderColor(textFields: TextField[])_</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>238</x><y>231</y><w>238</w><h>21</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;320;10</additional_attributes></element><element><id>Relation</id><coordinates><x>350</x><y>133</y><w>210</w><h>77</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>280;90;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>378</x><y>350</y><w>245</w><h>224</h></coordinates><panel_attributes>&lt;&lt;controllers&gt;&gt;
+TeamController
+--
+-teamView: TeamView
+-driverDAO: DriverDAO
+-teamDAO: TeamDAO
+-teamNameComparator: TeamNameComparator
+-teamSelected: boolean
+-selectedTeam: int
+--
+-handleLoad(): void
+-handleSave(): void
+-handleClose(): void
+-handleNewTeam(): void
+-handleDeleteTeam(): void
+-handleSaveTeam(): void
+-handleSwitchView(): void
+-loadInputFields(team: Team): void
+-createConfirmAlert(title: String, headerText: String): Alert
+-loadListView(): void
+-sortView(): void
++getView(): View</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>483</x><y>259</y><w>77</w><h>105</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;130</additional_attributes></element><element><id>UMLClass</id><coordinates><x>707</x><y>371</y><w>196</w><h>161</h></coordinates><panel_attributes>&lt;&lt;controllers&gt;&gt;
+DriverController
+--
+-driverView: DriverView
+-driverDAO: DriverDAO
+-comparator: Comparator&lt;Driver&gt;
+-driverSelected: boolean
+--
+-handleNewDriver(): void
+-handleDeleteDriver(): void
+-handleSwitchView(): void
+-handleSaveDriver(): void
+-loadInputFields(driver: Driver): void
+-initializeComparator(button: RadioButton): void
+-loadListView(team: Team): void
+-sortListView(): void
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>483</x><y>567</y><w>63</w><h>84</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>70;100;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>539</x><y>259</y><w>287</w><h>126</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;390;160</additional_attributes></element><element><id>Relation</id><coordinates><x>700</x><y>525</y><w>112</w><h>119</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;150;140;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>707</x><y>203</y><w>147</w><h>63</h></coordinates><panel_attributes>&lt;&lt;utils&gt;&gt;
+Validator
+-
+-Validator()
+_+isInteger(string: String): boolean_
+_+isDouble(string: String): boolean_</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>637</x><y>231</y><w>84</w><h>21</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1036</x><y>0</y><w>133</w><h>84</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+DAO&lt;T&gt;
+--
++getAll(): List&lt;T&gt;
++addOrUpdate(object: T): void
++remove(object: T): void
++load(): boolean
++load(): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>966</x><y>133</y><w>119</w><h>98</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+/TeamDAO/
+--
+#objects: List&lt;team&gt;
+--
++getById(id: int): Team
++getIdFor(team: Team): int
++...
+/+load(): boolean/
+/+save(): boolean/</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1015</x><y>77</y><w>84</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>100;10;10;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>882</x><y>273</y><w>77</w><h>56</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+DummyTeamDAO
+--
++load(): boolean
++save(): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>917</x><y>224</y><w>112</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>140;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>441</x><y>42</y><w>609</w><h>42</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>850;10;10;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1232</x><y>140</y><w>154</w><h>91</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+/DriverDAO/
+--
+#objects: List&lt;Driver&gt;
+--
++getAllFor(team: Team): List&lt;Driver&gt;
++...
+/+load(): boolean/
+/+save(): boolean/</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1078</x><y>77</y><w>203</w><h>77</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;270;90</additional_attributes></element><element><id>UMLClass</id><coordinates><x>980</x><y>273</y><w>70</w><h>63</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+TextTeamDAO
+--
+_-FILENAME: String_
+--
++load(): boolean
++save(): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1078</x><y>273</y><w>77</w><h>63</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+BinaryTeamDAO
+--
+_-FILENAME: String
+--
++load(): boolean
++save(): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1008</x><y>224</y><w>21</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>1008</x><y>224</y><w>126</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;160;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1183</x><y>273</y><w>84</w><h>63</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+DummyDriverDAO
+--
++load(): boolean
++save(): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1288</x><y>273</y><w>77</w><h>63</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+TextDriverDAO
+--
+_-FILENAME: String_
+--
++load(): boolean
++save(): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1386</x><y>273</y><w>91</w><h>70</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+ObjectDriverDAO
+--
+_-FILENAME: STRING_
+--
++load(): boolean
++save(): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1225</x><y>224</y><w>91</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>110;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>1295</x><y>224</y><w>49</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;50;70</additional_attributes></element><element><id>Relation</id><coordinates><x>1302</x><y>224</y><w>147</w><h>63</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;190;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>245</x><y>644</y><w>161</w><h>70</h></coordinates><panel_attributes>&lt;&lt;comparators&gt;&gt;
+TeamNameComparator
+--
+-sortDesending: boolean
+--
++compare(o1: Team, o2: Team): int
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>322</x><y>567</y><w>161</w><h>91</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>210;10;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>399</x><y>672</y><w>91</w><h>21</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1064</x><y>637</y><w>133</w><h>56</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+DriverNameComparator
+--
+sortDesending: boolean
+--
++compare(o1: Driver, o2: Driver)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>791</x><y>623</y><w>210</w><h>70</h></coordinates><panel_attributes>&lt;&lt;data&gt;&gt;
+DriverNameComparator
+--
+-sortDesending: boolean
+-driverNameComparator: DriverNameComparator
+--
++compare(o1: Driver, o2: Driver)
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>749</x><y>658</y><w>56</w><h>56</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;60;60;10</additional_attributes></element><element><id>Relation</id><coordinates><x>791</x><y>525</y><w>119</w><h>112</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;150;140</additional_attributes></element><element><id>Relation</id><coordinates><x>889</x><y>525</y><w>189</w><h>161</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;10;170;110;250;210</additional_attributes></element><element><id>Relation</id><coordinates><x>749</x><y>686</y><w>406</w><h>56</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>560;10;560;60;10;60</additional_attributes></element><element><id>UMLClass</id><coordinates><x>581</x><y>819</y><w>112</w><h>42</h></coordinates><panel_attributes>&lt;&lt;java.util&gt;&gt;
+Comparator&lt;T&gt;
+--
++compare(o1: T, o2: T): int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>322</x><y>707</y><w>273</w><h>147</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>370;190;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>637</x><y>686</y><w>266</w><h>147</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;190;360;10</additional_attributes></element><element><id>Relation</id><coordinates><x>686</x><y>686</y><w>504</w><h>168</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;220;700;220;700;10</additional_attributes></element></diagram>

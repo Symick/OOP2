@@ -66,7 +66,7 @@ public class DriverController extends Controller {
 
         driverView.getRadioButtonGroup().getToggles().get(0).setSelected(true);
         driverView.getRadioButtonGroup().selectedToggleProperty().addListener((observable ->
-                initializeComperator((RadioButton) driverView.getRadioButtonGroup().getSelectedToggle())));
+                initializeComparator((RadioButton) driverView.getRadioButtonGroup().getSelectedToggle())));
 
         // add event listeners to the all the buttons in the view
         driverView.getCreateBtn().setOnAction(actionEvent -> handleNewDriver());
@@ -246,7 +246,7 @@ public class DriverController extends Controller {
         sortListView();
     }
 
-    private void initializeComperator(RadioButton button) {
+    private void initializeComparator(RadioButton button) {
         switch (button.getText()) {
             case "name (Z-A)":
                 comparator = new DriverNameComparator(true);
