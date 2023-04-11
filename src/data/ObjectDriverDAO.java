@@ -14,9 +14,11 @@ public class ObjectDriverDAO extends DriverDAO {
     private final String FILENAME = "resources/drivers.obj";
     TeamDAO teamDAO = MainApplication.getTeamDAO();
 
+
     @Override
     public boolean load() {
         File file = new File(FILENAME);
+        objects.clear();
         try (FileInputStream fin = new FileInputStream(file);
              ObjectInputStream objectInputStream = new ObjectInputStream(fin)) {
             int size = objectInputStream.readInt();

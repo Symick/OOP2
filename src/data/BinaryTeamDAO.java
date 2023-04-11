@@ -15,6 +15,8 @@ public class BinaryTeamDAO extends TeamDAO {
     @Override
     public boolean load() {
         File file = new File(FILENAME);
+        objects.clear();
+
         try (FileInputStream fin = new FileInputStream(file);
              DataInputStream din = new DataInputStream(fin)) {
             int size = din.readInt();
