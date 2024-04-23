@@ -1,9 +1,6 @@
 package practicumopdracht;
 
-import data.BinaryTeamDAO;
-import data.DriverDAO;
-import data.ObjectDriverDAO;
-import data.TeamDAO;
+import data.*;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -20,8 +17,8 @@ public class MainApplication extends Application {
     private final static int HEIGHT = 500;
     private final static int WIDTH = 640;
     private static Stage stage;
-    private static TeamDAO teamDAO = new BinaryTeamDAO();
-    private static DriverDAO driverDAO = new ObjectDriverDAO();
+    private static TeamDAO teamDAO = new TextTeamDAO();
+    private static DriverDAO driverDAO = new TextDriverDAO();
     private final String TITLE = String.format("Practicumopdracht OOP2 - %s", Main.studentNaam);
 
     /**
